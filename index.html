@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dapur Ibu — 100+ Resep Lengkap</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#FDF8F0;--warm:#F5EDD8;--orange:#E8652A;--orange-light:#F2895A;
+  --green:#3A6B4A;--green-light:#EBF3EE;--brown:#5C3D1E;--brown-mid:#7A4F2A;
+  --text:#2C1A0E;--muted:#8A6E55;--white:#FFFFFF;--border:#EDE3D4;
+  --shadow:0 2px 16px rgba(44,26,14,.09);--shadow-lg:0 8px 40px rgba(44,26,14,.15);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);min-height:100vh;}
+h1,h2,h3,h4{font-family:'Playfair Display',serif;}
+
+/* HEADER */
+.header{background:var(--brown);padding:1rem 1.4rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.2);}
+.logo{color:var(--cream);font-family:'Playfair Display',serif;font-size:20px;font-weight:700;}
+.logo span{color:#F2C97E;}
+.header-sub{color:#C8A87A;font-size:11px;}
+.random-btn-sm{background:var(--orange);color:white;border:none;padding:8px 14px;border-radius:50px;font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:6px;}
+.random-btn-sm:hover{background:var(--orange-light);}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,var(--brown) 0%,var(--brown-mid) 100%);padding:1.8rem 1.4rem 2.5rem;text-align:center;overflow:hidden;position:relative;}
+.hero::before{content:'🍳';font-size:100px;position:absolute;right:-10px;top:-10px;opacity:.08;}
+.hero::after{content:'🥘';font-size:80px;position:absolute;left:-5px;bottom:-15px;opacity:.08;}
+.hero h1{color:var(--cream);font-size:clamp(24px,5vw,36px);font-weight:900;line-height:1.2;margin-bottom:.4rem;}
+.hero h1 span{color:#F2C97E;}
+.hero p{color:#C8A87A;font-size:13px;margin-bottom:1.4rem;}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.1);color:var(--cream);padding:5px 14px;border-radius:20px;font-size:12px;margin-bottom:1.2rem;}
+.random-btn-hero{background:var(--orange);color:white;border:none;padding:13px 26px;border-radius:50px;font-size:15px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 20px rgba(232,101,42,.4);transition:all .2s;}
+.random-btn-hero:hover{background:var(--orange-light);transform:translateY(-2px);}
+
+/* FILTER */
+.filter-wrap{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:58px;z-index:90;padding:.8rem 1.2rem .5rem;}
+.filter-row{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px;}
+.filter-row::-webkit-scrollbar{display:none;}
+.fbtn{flex-shrink:0;padding:7px 14px;border-radius:50px;border:1.5px solid var(--border);background:transparent;font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;color:var(--muted);transition:all .18s;white-space:nowrap;}
+.fbtn.active{background:var(--brown);border-color:var(--brown);color:var(--cream);}
+.fbtn:hover:not(.active){border-color:var(--orange);color:var(--orange);}
+.cat-row{display:flex;gap:6px;margin-top:8px;overflow-x:auto;scrollbar-width:none;}
+.cat-row::-webkit-scrollbar{display:none;}
+.cbtn{flex-shrink:0;padding:5px 13px;border-radius:50px;border:1.5px solid var(--border);background:transparent;font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;color:var(--muted);transition:all .18s;}
+.cbtn.active{background:var(--green);border-color:var(--green);color:white;}
+
+/* SEARCH */
+.search-wrap{padding:.7rem 1.2rem;background:var(--white);position:relative;}
+.search-input{width:100%;padding:9px 14px 9px 38px;border:1.5px solid var(--border);border-radius:50px;font-size:13px;font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);outline:none;transition:border .2s;}
+.search-input:focus{border-color:var(--orange);}
+.si{position:absolute;left:24px;top:50%;transform:translateY(-50%);font-size:16px;pointer-events:none;}
+
+/* STATS BAR */
+.stats-bar{padding:.5rem 1.2rem;display:flex;align-items:center;justify-content:space-between;}
+.stats-text{font-size:12px;color:var(--muted);}
+.stats-count{font-size:13px;font-weight:500;color:var(--brown);}
+
+/* GRID */
+.grid-section{padding:.5rem 1.2rem 1.5rem;}
+.sec-title{font-size:16px;font-weight:700;color:var(--brown);margin-bottom:.8rem;display:flex;align-items:center;gap:8px;margin-top:1rem;}
+.sec-title .ln{flex:1;height:1px;background:linear-gradient(to right,var(--border),transparent);}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:12px;}
+.card{background:var(--white);border-radius:14px;overflow:hidden;cursor:pointer;transition:all .22s;box-shadow:var(--shadow);border:1px solid rgba(237,227,212,.4);}
+.card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);}
+.card-em{background:var(--warm);padding:1.2rem;text-align:center;font-size:38px;position:relative;}
+.card-bdr{position:absolute;top:7px;right:7px;font-size:9px;padding:2px 7px;border-radius:12px;font-weight:700;font-family:'DM Sans',sans-serif;letter-spacing:.02em;}
+.bi{background:#FFE4CC;color:#C44D00;}
+.ba{background:#FFE0E0;color:#A00;}
+.be{background:#E0E8FF;color:#003080;}
+.bam{background:#E8FFE8;color:#005000;}
+.card-body{padding:10px 10px 12px;}
+.card-title{font-size:13px;font-weight:500;color:var(--text);line-height:1.3;margin-bottom:4px;}
+.card-meta{font-size:11px;color:var(--muted);display:flex;gap:5px;align-items:center;}
+.dot{width:3px;height:3px;border-radius:50%;background:var(--muted);}
+
+/* MODAL */
+.overlay{display:none;position:fixed;inset:0;background:rgba(30,15,5,.65);z-index:200;align-items:flex-end;justify-content:center;}
+.overlay.open{display:flex;animation:fi .2s;}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+.modal{background:var(--white);border-radius:22px 22px 0 0;width:100%;max-width:600px;max-height:93vh;overflow-y:auto;animation:su .28s ease;}
+@keyframes su{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.mhero{background:var(--warm);padding:1.5rem 1.4rem 1.2rem;position:relative;}
+.mclose{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.75);border:none;width:32px;height:32px;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--brown);}
+.mclose:hover{background:white;}
+.m-em{font-size:52px;display:block;margin-bottom:.7rem;}
+.m-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--brown);margin-bottom:.4rem;}
+.m-tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:.5rem;}
+.m-meta{font-size:12px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;}
+.mbody{padding:1.2rem 1.4rem;}
+.msec{margin-bottom:1.4rem;}
+.msec h3{font-size:15px;font-weight:700;color:var(--brown);margin-bottom:.7rem;display:flex;align-items:center;gap:8px;}
+.msec h3::after{content:'';flex:1;height:1px;background:var(--border);}
+.ing-list{display:flex;flex-direction:column;gap:5px;}
+.ing{display:flex;align-items:center;gap:9px;padding:7px 11px;background:var(--cream);border-radius:7px;font-size:13px;}
+.idot{width:7px;height:7px;border-radius:50%;background:var(--orange);flex-shrink:0;}
+.iamt{margin-left:auto;font-size:11px;color:var(--muted);font-weight:500;}
+.steps{display:flex;flex-direction:column;gap:9px;}
+.step{display:flex;gap:11px;align-items:flex-start;}
+.snum{width:26px;height:26px;border-radius:50%;background:var(--brown);color:var(--cream);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.stext{font-size:13px;line-height:1.6;flex:1;padding-top:3px;}
+.tips-box{background:var(--green-light);border-left:3px solid var(--green);border-radius:0 7px 7px 0;padding:9px 13px;font-size:13px;color:#2D5239;line-height:1.6;}
+.badge{display:inline-block;font-size:11px;padding:3px 9px;border-radius:20px;font-weight:600;}
+.bk-ok{background:#E1F5EE;color:#085041;}
+.bk-bad{background:#FCEBEB;color:#791F1F;}
+
+/* RANDOM MODAL */
+.r-result{background:var(--brown);border-radius:14px;padding:1.4rem;text-align:center;margin-bottom:1.2rem;}
+.r-em{font-size:60px;display:block;margin-bottom:.7rem;}
+.r-result h2{color:var(--cream);font-size:20px;margin-bottom:.3rem;}
+.r-result p{color:#C8A87A;font-size:12px;}
+.btn-view{background:var(--orange);color:white;border:none;padding:11px 22px;border-radius:50px;font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:.8rem;}
+.btn-reroll{background:transparent;color:var(--cream);border:1.5px solid rgba(255,255,255,.3);padding:9px 18px;border-radius:50px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;margin:.5rem .3rem 0;}
+.no-res{text-align:center;padding:2.5rem;color:var(--muted);font-size:14px;}
+
+@media(max-width:400px){
+  .cards{grid-template-columns:repeat(2,1fr);}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div><div class="logo">Dapur <span>Ibu</span></div><div class="header-sub">100+ resep pilihan</div></div>
+  <button class="random-btn-sm" onclick="openRandom()">🎲 Acak Menu</button>
+</div>
+
+<div class="hero">
+  <div class="hero-badge">✨ 100+ resep dari 4 penjuru dunia</div>
+  <h1>Masak Apa <span>Hari Ini?</span></h1>
+  <p>Indonesia · Asia · Eropa · Amerika — semua bahan mudah dicari</p>
+  <button class="random-btn-hero" onclick="openRandom()">🎲 Pilihkan Menu Hari Ini!</button>
+</div>
+
+<div class="filter-wrap">
+  <div class="filter-row">
+    <button class="fbtn active" onclick="setOri('semua',this)">🌍 Semua</button>
+    <button class="fbtn" onclick="setOri('indonesia',this)">🇮🇩 Indonesia</button>
+    <button class="fbtn" onclick="setOri('asia',this)">🌏 Asia</button>
+    <button class="fbtn" onclick="setOri('eropa',this)">🏰 Eropa</button>
+    <button class="fbtn" onclick="setOri('amerika',this)">🗽 Amerika</button>
+  </div>
+  <div class="cat-row">
+    <button class="cbtn active" onclick="setCat('semua',this)">Semua Jenis</button>
+    <button class="cbtn" onclick="setCat('utama',this)">🍽 Menu Utama</button>
+    <button class="cbtn" onclick="setCat('camilan',this)">🍿 Camilan</button>
+    <button class="cbtn" onclick="setCat('minuman',this)">🥤 Minuman</button>
+  </div>
+</div>
+
+<div class="search-wrap">
+  <span class="si">🔍</span>
+  <input class="search-input" type="text" id="si" placeholder="Cari resep... (misal: ayam, nasi, cokelat)" oninput="render()" style="padding-left:36px;">
+</div>
+
+<div class="stats-bar">
+  <span class="stats-text">Menampilkan</span>
+  <span class="stats-count" id="countDisplay">0 resep</span>
+</div>
+
+<div class="grid-section" id="grid"></div>
+
+<!-- MODAL RESEP -->
+<div class="overlay" id="recipeModal" onclick="if(event.target===this)closeMR()">
+  <div class="modal">
+    <div class="mhero">
+      <button class="mclose" onclick="closeMR()">✕</button>
+      <span class="m-em" id="mEm"></span>
+      <div class="m-title" id="mTit"></div>
+      <div class="m-tags" id="mTags"></div>
+      <div class="m-meta" id="mMeta"></div>
+    </div>
+    <div class="mbody">
+      <div class="msec"><h3>🛒 Bahan-Bahan</h3><div class="ing-list" id="mIng"></div></div>
+      <div class="msec"><h3>👩‍🍳 Cara Memasak</h3><div class="steps" id="mSteps"></div></div>
+      <div class="msec" id="mTipsWrap"><h3>💡 Tips Memasak</h3><div class="tips-box" id="mTips"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL RANDOM -->
+<div class="overlay" id="randomModal" onclick="if(event.target===this)document.getElementById('randomModal').classList.remove('open')">
+  <div class="modal" style="border-radius:22px 22px 0 0;">
+    <div class="mbody">
+      <div style="display:flex;justify-content:flex-end;margin-bottom:.8rem;">
+        <button class="mclose" style="position:static" onclick="document.getElementById('randomModal').classList.remove('open')">✕</button>
+      </div>
+      <div class="r-result" id="rResult"></div>
+      <div style="text-align:center;padding-bottom:1rem;">
+        <button class="btn-view" id="btnVR">Lihat Resep Lengkap</button>
+        <button class="btn-reroll" onclick="rollRandom()">🎲 Acak Lagi</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const DATA = [
+// ═══════════════ INDONESIA - MENU UTAMA ═══════════════
+{id:1,emoji:'🍛',title:'Rendang Sapi',origin:'indonesia',category:'utama',waktu:'120 mnt',porsi:'5 porsi',tingkat:'Menengah',
+bahan:[{nama:'Daging sapi sandung lamur',jumlah:'500 g'},{nama:'Santan kental',jumlah:'400 ml'},{nama:'Santan encer',jumlah:'200 ml'},{nama:'Serai',jumlah:'3 btg'},{nama:'Daun jeruk',jumlah:'5 lbr'},{nama:'Daun salam',jumlah:'2 lbr'},{nama:'Asam kandis',jumlah:'3 bh'},{nama:'Garam',jumlah:'sck'},{nama:'Cabai merah besar',jumlah:'8 bh'},{nama:'Cabai keriting',jumlah:'5 bh'},{nama:'Bawang merah',jumlah:'8 siung'},{nama:'Bawang putih',jumlah:'5 siung'},{nama:'Jahe',jumlah:'2 cm'},{nama:'Lengkuas',jumlah:'3 cm'},{nama:'Kunyit',jumlah:'2 cm'},{nama:'Kemiri',jumlah:'4 butir'}],
+langkah:['Potong daging 4–5 cm, sisihkan.','Haluskan semua bumbu halus.','Masukkan santan encer, bumbu, serai, daun jeruk, salam, asam kandis ke wajan.','Masukkan daging, masak api sedang aduk hingga mendidih.','Kecilkan api, masak 30 menit sambil diaduk.','Tuang santan kental, beri garam, aduk rata.','Masak api kecil 90 menit sambil terus diaduk hingga kering kehitaman.','Koreksi rasa, sajikan dengan nasi putih.'],
+tips:'Rendang semakin enak jika semakin kering dan gelap. Bisa tahan 3–4 hari tanpa kulkas.'},
+
+{id:2,emoji:'🍜',title:'Soto Ayam Bening',origin:'indonesia',category:'utama',waktu:'60 mnt',porsi:'4 porsi',tingkat:'Mudah',
+bahan:[{nama:'Ayam broiler',jumlah:'½ ekor'},{nama:'Bihun',jumlah:'100 g'},{nama:'Taoge',jumlah:'100 g'},{nama:'Telur rebus',jumlah:'2 btr'},{nama:'Daun bawang',jumlah:'2 btg'},{nama:'Seledri',jumlah:'2 btg'},{nama:'Bawang goreng',jumlah:'sck'},{nama:'Bawang merah',jumlah:'6 siung'},{nama:'Bawang putih',jumlah:'4 siung'},{nama:'Kunyit bakar',jumlah:'2 cm'},{nama:'Jahe',jumlah:'2 cm'},{nama:'Serai',jumlah:'2 btg'},{nama:'Garam & gula',jumlah:'sck'}],
+langkah:['Rebus ayam hingga matang, suwir dagingnya, saring kaldu.','Tumis bawang merah, bawang putih, kunyit bakar hingga harum.','Masukkan tumisan ke kaldu, tambahkan serai dan garam.','Didihkan 10 menit, koreksi rasa.','Tata bihun, taoge, suwiran ayam, irisan telur di mangkuk.','Siram kuah panas, taburi daun bawang, seledri, bawang goreng.','Sajikan dengan jeruk nipis dan sambal.'],
+tips:'Kunyit yang dibakar langsung di api membuat warna kuah lebih kuning cantik dan aroma lebih harum.'},
+
+{id:3,emoji:'🥘',title:'Gado-Gado',origin:'indonesia',category:'utama',waktu:'40 mnt',porsi:'3 porsi',tingkat:'Mudah',
+bahan:[{nama:'Tahu goreng',jumlah:'4 ptg'},{nama:'Tempe goreng',jumlah:'4 ptg'},{nama:'Telur rebus',jumlah:'3 btr'},{nama:'Kentang rebus',jumlah:'2 bh'},{nama:'Kangkung rebus',jumlah:'100 g'},{nama:'Kacang panjang rebus',jumlah:'100 g'},{nama:'Taoge',jumlah:'100 g'},{nama:'Mentimun',jumlah:'1 bh'},{nama:'Kacang tanah goreng',jumlah:'200 g'},{nama:'Cabai merah',jumlah:'3 bh'},{nama:'Bawang putih goreng',jumlah:'3 siung'},{nama:'Kencur',jumlah:'1 cm'},{nama:'Gula merah',jumlah:'1 sdm'},{nama:'Asam jawa',jumlah:'2 sdm'},{nama:'Kecap manis',jumlah:'2 sdm'},{nama:'Garam',jumlah:'sck'}],
+langkah:['Haluskan kacang, cabai, bawang putih, kencur, gula merah, garam.','Tambahkan asam jawa, kecap manis, air panas sedikit-sedikit.','Masak bumbu kacang api kecil 5 menit.','Tata semua sayuran, tahu, tempe, telur di piring.','Siram bumbu kacang. Sajikan dengan kerupuk.'],
+tips:'Kacang yang baru digoreng dan masih hangat menghasilkan bumbu kacang paling harum.'},
+
+{id:4,emoji:'🍲',title:'Sayur Asem',origin:'indonesia',category:'utama',waktu:'35 mnt',porsi:'4 porsi',tingkat:'Mudah',
+bahan:[{nama:'Jagung manis',jumlah:'1 bh'},{nama:'Kacang panjang',jumlah:'100 g'},{nama:'Labu siam',jumlah:'1 bh'},{nama:'Kacang tanah',jumlah:'50 g'},{nama:'Asam jawa',jumlah:'2 sdm'},{nama:'Gula merah',jumlah:'1 sdm'},{nama:'Bawang merah',jumlah:'5 siung'},{nama:'Bawang putih',jumlah:'3 siung'},{nama:'Cabai merah',jumlah:'2 bh'},{nama:'Kemiri',jumlah:'2 btr'},{nama:'Lengkuas',jumlah:'2 cm'},{nama:'Daun salam',jumlah:'2 lbr'},{nama:'Garam',jumlah:'sck'}],
+langkah:['Tumis bawang merah, bawang putih, kemiri, cabai hingga harum.','Rebus air, masukkan bumbu, lengkuas, salam, didihkan.','Masukkan jagung dan kacang tanah, rebus 10 menit.','Masukkan labu siam.','Tambahkan asam jawa, gula merah, garam.','Terakhir masukkan kacang panjang, masak 5 menit.','Koreksi rasa, sajikan hangat.'],
+tips:'Sayur asem paling nikmat jika kuahnya ringan, segar, dan tidak terlalu berminyak.'},
+
+{id:5,emoji:'🍗',title:'Ayam Bakar Kecap',origin:'indonesia',category:'utama',waktu:'50 mnt',porsi:'4 porsi',tingkat:'Mudah',
+bahan:[{nama:'Ayam potong 8',jumlah:'1 ekor'},{nama:'Kecap manis',jumlah:'5 sdm'},{nama:'Jeruk nipis',jumlah:'2 sdm'},{nama:'Bawang putih halus',jumlah:'5 siung'},{nama:'Ketumbar bubuk',jumlah:'1 sdt'},{nama:'Serai',jumlah:'2 btg'},{nama:'Daun salam',jumlah:'2 lbr'},{nama:'Garam & merica',jumlah:'sck'}],
+langkah:['Lumuri ayam dengan garam, bawang putih, ketumbar, jeruk nipis. Diamkan 20 mnt.','Rebus ayam dengan serai dan salam hingga setengah matang.','Bakar di teflon, olesi kecap tiap sisi.','Bakar hingga karamel kecokelatan.','Sajikan dengan lalapan dan sambal.'],
+tips:'Proses perebusan sebelum dibakar membuat ayam lebih empuk dan tidak gosong di luar tapi mentah di dalam.'},
+
+{id:6,emoji:'🍛',title:'Opor Ayam',origin:'indonesia',category:'utama',waktu:'60 mnt',porsi:'5 porsi',tingkat:'Menengah',
+bahan:[{nama:'Ayam potong',jumlah:'1 ekor'},{nama:'Santan kental',jumlah:'400 ml'},{nama:'Santan encer',jumlah:'300 ml'},{nama:'Serai',jumlah:'2 btg'},{nama:'Daun jeruk',jumlah:'4 lbr'},{nama:'Daun salam',jumlah:'2 lbr'},{nama:'Bawang merah',jumlah:'8 siung'},{nama:'Bawang putih',jumlah:'5 siung'},{nama:'Kemiri',jumlah:'5 btr'},{nama:'Ketumbar',jumlah:'1 sdt'},{nama:'Kunyit',jumlah:'2 cm'},{nama:'Jahe',jumlah:'2 cm'},{nama:'Lengkuas',jumlah:'3 cm'},{nama:'Garam & gula',jumlah:'sck'}],
+langkah:['Haluskan bawang merah, bawang putih, kemiri, ketumbar, kunyit, jahe.','Tumis bumbu halus, lengkuas, serai, daun salam hingga harum.','Masukkan ayam, aduk rata dengan bumbu.','Tuang santan encer, masak hingga mendidih.','Tuang santan kental, kecilkan api, masak 30 mnt sambil diaduk.','Beri garam dan gula, koreksi rasa.'],
+tips:'Aduk terus saat santan kental dimasukkan agar tidak pecah.'},
+
+{id:7,emoji:'🥩',title:'Semur Daging',origin:'indonesia',category:'utama',waktu:'70 mnt',porsi:'4 porsi',tingkat:'Menengah',
+bahan:[{nama:'Daging sapi',jumlah:'400 g'},{nama:'Kentang',jumlah:'2 bh'},{nama:'Telur rebus',jumlah:'4 btr'},{nama:'Kecap manis',jumlah:'5 sdm'},{nama:'Bawang merah',jumlah:'6 siung'},{nama:'Bawang putih',jumlah:'4 siung'},{nama:'Pala bubuk',jumlah:'½ sdt'},{nama:'Cengkeh',jumlah:'3 bh'},{nama:'Kayu manis',jumlah:'3 cm'},{nama:'Gula merah',jumlah:'1 sdm'},{nama:'Garam & merica',jumlah:'sck'}],
+langkah:['Rebus daging hingga empuk, potong dadu. Simpan kaldunya.','Tumis bawang merah, bawang putih, cengkeh, kayu manis hingga harum.','Masukkan daging, aduk rata.','Tuang kaldu secukupnya, tambahkan kecap manis, pala, gula merah, garam.','Masukkan kentang dan telur rebus.','Masak api kecil hingga kuah mengental dan bumbu meresap.','Koreksi rasa, sajikan dengan nasi.'],
+tips:'Semur semakin enak keesokan harinya karena bumbu makin meresap.'},
+
+{id:8,emoji:'🍢',title:'Sate Ayam Madura',origin:'indonesia',category:'utama',waktu:'45 mnt',porsi:'4 porsi',tingkat:'Mudah',
+bahan:[{nama:'Dada/paha ayam',jumlah:'400 g'},{nama:'Tusuk sate',jumlah:'20 btg'},{nama:'Kecap manis',jumlah:'4 sdm'},{nama:'Minyak goreng',jumlah:'2 sdm'},{nama:'BUMBU KACANG: Kacang tanah goreng',jumlah:'200 g'},{nama:'Cabai rawit',jumlah:'5 bh'},{nama:'Bawang putih',jumlah:'3 siung'},{nama:'Kecap manis',jumlah:'3 sdm'},{nama:'Gula merah',jumlah:'1 sdm'},{nama:'Garam',jumlah:'sck'},{nama:'Air panas',jumlah:'150 ml'}],
+langkah:['Potong ayam dadu 2–3 cm, tusuk 4–5 potong per tusuk.','Olesi kecap manis dan minyak, marinasi 15 mnt.','Buat bumbu kacang: haluskan kacang, cabai, bawang putih. Tambahkan kecap, gula, garam, air panas. Masak sebentar.','Bakar sate di atas bara/teflon sambil dibolak-balik dan diolesi kecap.','Sajikan dengan bumbu kacang dan lontong.'],
+tips:'Sate lebih nikmat dibakar di atas arang. Olesi kecap sesering mungkin agar warnanya mengkilap cantik.'},
+
+{id:9,emoji:'🍜',title:'Bakso Kuah',origin:'indonesia',category:'utama',waktu:'90 mnt',porsi:'6 porsi',tingkat:'Menengah',
+bahan:[{nama:'Daging sapi giling halus',jumlah:'500 g'},{nama:'Tepung tapioka',jumlah:'100 g'},{nama:'Putih telur',jumlah:'2 btr'},{nama:'Bawang putih halus',jumlah:'5 siung'},{nama:'Garam',jumlah:'2 sdt'},{nama:'Merica',jumlah:'1 sdt'},{nama:'Es batu halus',jumlah:'100 g'},{nama:'KUAH: Tulang sapi',jumlah:'500 g'},{nama:'Bawang putih goreng',jumlah:'5 siung'},{nama:'Daun bawang',jumlah:'3 btg'},{nama:'Seledri',jumlah:'2 btg'}],
+langkah:['Campur daging giling, tepung tapioka, putih telur, bawang putih, garam, merica, es batu. Aduk rata.','Rebus air mendidih. Ambil adonan, bentuk bulat dengan tangan dan sendok, langsung masukkan ke air mendidih.','Masak hingga bakso mengapung, angkat.','Buat kuah: rebus tulang sapi 2 jam, saring. Tumis bawang putih, masukkan ke kaldu.','Beri garam dan merica pada kuah. Sajikan bakso dengan kuah, mie, tahu.'],
+tips:'Es batu adalah rahasia bakso kenyal. Aduk adonan hingga benar-benar homogen dan dingin.'},
+
+{id:10,emoji:'🫕',title:'Nasi Goreng Kampung',origin:'indonesia',category:'utama',waktu:'20 mnt',porsi:'2 porsi',tingkat:'Mudah',
+bahan:[{nama:'Nasi putih dingin',jumlah:'2 piring'},{nama:'Telur',jumlah:'2 btr'},{nama:'Cabai rawit',jumlah:'3 bh'},{nama:'Bawang merah',jumlah:'4 siung'},{nama:'Bawang putih',jumlah:'3 siung'},{nama:'Kecap manis',jumlah:'2 sdm'},{nama:'Garam & merica',jumlah:'sck'},{nama:'Minyak goreng',jumlah:'3 sdm'},{nama:'Daun bawang',jumlah:'2 btg'}],
+langkah:['Iris bawang merah, bawang putih, cabai rawit.','Tumis hingga harum dan bawang kecokelatan.','Pecahkan telur, orak-arik sebentar.','Masukkan nasi, aduk rata dengan bumbu.','Tambahkan kecap manis, garam, merica. Aduk terus di api besar.','Masukkan daun bawang, aduk sebentar. Sajikan.'],
+tips:'Nasi bekas semalam (dingin dari kulkas) menghasilkan nasi goreng yang lebih pera dan tidak menggumpal.'},
+
+{id:11,emoji:'🥗',title:'Pecel Sayuran',origin:'indonesia',category:'utama',waktu:'30 mnt',porsi:'3 porsi',tingkat:'Mudah',
+bahan:[{nama:'Kangkung',jumlah:'200 g'},{nama:'Bayam',jumlah:'150 g'},{nama:'Kacang panjang',jumlah:'100 g'},{nama:'Taoge',jumlah:'100 g'},{nama:'Mentimun',jumlah:'1 bh'},{nama:'SAMBAL PECEL: Kacang tanah goreng',jumlah:'200 g'},{nama:'Cabai merah',jumlah:'4 bh'},{nama:'Kencur',jumlah:'2 cm'},{nama:'Daun jeruk',jumlah:'3 lbr'},{nama:'Gula merah',jumlah:'2 sdm'},{nama:'Asam jawa',jumlah:'1 sdt'},{nama:'Garam',jumlah:'sck'}],
+langkah:['Rebus kangkung, bayam, kacang panjang masing-masing sebentar. Tiriskan.','Haluskan kacang, cabai, kencur, daun jeruk, gula merah, asam, garam.','Encerkan bumbu dengan air panas hingga konsistensi saus.','Tata sayuran di piring bersama taoge dan mentimun.','Siram sambal pecel. Sajikan dengan peyek atau rempeyek.'],
+tips:'Sambal pecel yang dibuat saat kacang masih hangat menghasilkan tekstur paling creamy.'},
+
+{id:12,emoji:'🍲',title:'Gulai Kambing',origin:'indonesia',category:'utama',waktu:'90 mnt',porsi:'6 porsi',tingkat:'Menengah',
+bahan:[{nama:'Daging kambing',jumlah:'600 g'},{nama:'Santan kental',jumlah:'400 ml'},{nama:'Kentang',jumlah:'3 bh'},{nama:'Bawang merah',jumlah:'8 siung'},{nama:'Bawang putih',jumlah:'5 siung'},{nama:'Kunyit',jumlah:'3 cm'},{nama:'Jahe',jumlah:'3 cm'},{nama:'Lengkuas',jumlah:'3 cm'},{nama:'Kemiri',jumlah:'5 btr'},{nama:'Cabai merah',jumlah:'6 bh'},{nama:'Serai',jumlah:'2 btg'},{nama:'Daun jeruk',jumlah:'5 lbr'},{nama:'Ketumbar',jumlah:'1 sdt'},{nama:'Jintan',jumlah:'½ sdt'},{nama:'Garam & gula',jumlah:'sck'}],
+langkah:['Rebus kambing dengan jahe dan garam hingga empuk, sisihkan kaldunya.','Haluskan semua bumbu halus.','Tumis bumbu halus, serai, lengkuas, daun jeruk hingga matang dan harum.','Masukkan kambing, aduk rata.','Tuang kaldu dan santan, masak hingga mendidih.','Masukkan kentang, kecilkan api, masak 20 mnt hingga matang.','Koreksi rasa, sajikan.'],
+tips:'Merebus kambing terlebih dahulu dengan jahe menghilangkan bau prengus.'},
+
+{id:13,emoji:'🍛',title:'Nasi Uduk Betawi',origin:'indonesia',category:'utama',waktu:'45 mnt',porsi:'4 porsi',tingkat:'Mudah',
+bahan:[{nama:'Beras',jumlah:'2 cangkir'},{nama:'Santan',jumlah:'400 ml'},{nama:'Serai',jumlah:'2 btg'},{nama:'Daun salam',jumlah:'2 lbr'},{nama:'Daun pandan',jumlah:'1 lbr'},{nama:'Bawang putih',jumlah:'3 siung'},{nama:'Garam',jumlah:'1½ sdt'},{nama:'Air',jumlah:'200 ml'}],
+langkah:['Cuci beras, tiriskan.','Masak santan, serai, salam, pandan, bawang putih, garam hingga hangat.','Masukkan beras, masak hingga santan terserap (seperti memasak nasi biasa).','Kukus nasi hingga matang sempurna sekitar 20 mnt.','Sajikan dengan ayam goreng, telur balado, tempe orek, sambal kacang.'],
+tips:'Nasi uduk paling enak dikukus dua kali agar butir nasinya pulen dan tidak lengket.'},
+
+{id:14,emoji:'🐟',title:'Ikan Bakar Bumbu Bali',origin:'indonesia',category:'utama',waktu:'40 mnt',porsi:'3 porsi',tingkat:'Mudah',
+bahan:[{nama:'Ikan kembung / nila utuh',jumlah:'3 ekor'},{nama:'Jeruk nipis',jumlah:'2 bh'},{nama:'Garam',jumlah:'sck'},{nama:'BUMBU BALI: Cabai merah besar',jumlah:'5 bh'},{nama:'Cabai rawit',jumlah:'3 bh'},{nama:'Bawang merah',jumlah:'6 siung'},{nama:'Bawang putih',jumlah:'4 siung'},{nama:'Tomat merah',jumlah:'2 bh'},{nama:'Terasi bakar',jumlah:'1 sdt'},{nama:'Gula merah',jumlah:'1 sdm'},{nama:'Minyak goreng',jumlah:'3 sdm'}],
+langkah:['Bersihkan ikan, buat sayatan, lumuri garam dan jeruk nipis, diamkan 15 mnt.','Haluskan semua bumbu bali.','Tumis bumbu hingga matang dan berminyak, koreksi rasa.','Olesi ikan dengan bumbu bali yang sudah matang.','Bakar ikan di atas arang/teflon sambil terus diolesi bumbu.','Sajikan dengan nasi, lalapan, dan sambal matah.'],
+tips:'Bumbu bali harus benar-benar matang sebelum dioleskan agar tidak pahit.'},
+
+{id:15,emoji:'🍳',title:'Telur Balado',origin:'indonesia',category:'utama',waktu:'25 mnt',porsi:'4 porsi',tingkat:'Mudah',
+bahan:[{nama:'Telur',jumlah:'8 btr'},{nama:'Cabai merah besar',jumlah:'6 bh'},{nama:'Cabai rawit (opsional)',jumlah:'3 bh'},{nama:'Bawang merah',jumlah:'5 siung'},{nama:'Bawang putih',jumlah:'3 siung'},{nama:'Tomat merah',jumlah:'1 bh'},{nama:'Daun salam',jumlah:'1 lbr'},{nama:'Gula merah',jumlah:'1 sdt'},{nama:'Garam',jumlah:'sck'},{nama:'Minyak goreng',jumlah:'3 sdm'}],
+langkah:['Rebus telur hingga matang, kupas, goreng sebentar hingga sedikit kecokelatan.','Haluskan cabai, bawang merah, bawang putih, tomat.','Tumis bumbu halus dengan daun salam hingga matang dan harum.','Beri gula merah dan garam.','Masukkan telur, aduk rata hingga bumbu menempel.','Masak sebentar hingga bumbu mengering di telur.'],
+tips:'Menggoreng telur rebus sebelum dibalado membuat kulitnya sedikit keriput sehingga bumbu lebih menempel.'},
+
+{id:16,emoji:'🥩',title:'Tongseng Sapi',origin:'indonesia',category:'utama',waktu:'75 mnt',porsi:'4 porsi',tingkat:'Menengah',
+bahan:[{nama:'Daging sapi + tulang',jumlah:'400 g'},{nama:'Kol',jumlah:'150 g'},{nama:'Tomat merah',jumlah:'2 bh'},{nama:'Kecap manis',jumlah:'3 sdm'},{nama:'Santan encer',jumlah:'200 ml'},{nama:'Bawang merah',jumlah:'6 siung'},{nama:'Bawang putih',jumlah:'4 siung'},{nama:'Cabai merah',jumlah:'4 bh'},{nama:'Jahe',jumlah:'2 cm'},{nama:'Kunyit',jumlah:'1 cm'},{nama:'Ketumbar',jumlah:'1 sdt'},{nama:'Serai',jumlah:'1 btg'},{nama:'Garam & gula',jumlah:'sck'}],
+langkah:['Rebus daging hingga empuk, sisihkan kaldu, potong daging.','Haluskan bawang merah, bawang putih, cabai, jahe, kunyit, ketumbar.','Tumis bumbu halus dan serai hingga harum.','Masukkan daging dan kaldu secukupnya.','Tuang santan, kecap manis. Masak hingga mendidih.','Masukkan kol dan tomat, masak 5 mnt.','Koreksi rasa, sajikan panas.'],
+tips:'Tongseng berbeda dari gule karena ada kecap manis yang memberikan rasa lebih gelap dan manis.'},
+
+// ═══════════════ ASIA - MENU UTAMA ═══════════════
+{id:17,emoji:'🍜',title:'Mie Goreng Yakisoba',origin:'asia',category:'utama',waktu:'25 mnt',porsi:'2 porsi',tingkat:'Mudah',
+bahan:[{nama:'Mie telur segar',jumlah:'200 g'},{nama:'Daging sapi iris tipis',jumlah:'150 g'},{nama:'Kol iris',jumlah:'100 g'},{nama:'Wortel',jumlah:'1 bh'},{nama:'Daun bawang',jumlah:'2 btg'},{nama:'Bawang putih',jumlah:'3 siung'},{nama:'Kecap manis',jumlah:'3 sdm'},{nama:'Saus tiram',jumlah:'2 sdm'},{nama:'Kecap inggris',jumlah:'1 sdm'},{nama:'Merica',jumlah:'sck'},{nama:'Minyak goreng',jumlah:'3 sdm'}],
+langkah:['Campur semua saus dalam mangkuk.','Tumis bawang putih hingga harum, masukkan daging masak hingga matang.','Masukkan wortel, aduk 2 mnt. Masukkan kol.','Masukkan mie, siram saus, aduk cepat di api besar.','Masukkan daun bawang, koreksi rasa. Sajikan segera.'],
+tips:'Api besar adalah kunci mie goreng ala restoran — masak cepat agar mie tidak lembek.'},
+
+{id:18,emoji:'🍱',title:'Nasi Goreng Kimchi',origin:'asia',category:'utama',waktu:'20 mnt',porsi:'2 porsi',tingkat:'Mudah',
+bahan:[{nama:'Nasi putih dingin',jumlah:'2 piring'},{nama:'Kimchi',jumlah:'100 g'},{nama:'Telur',jumlah:'2 btr'},{nama:'Bawang putih',jumlah:'3 siung'},{nama:'Bawang bombay',jumlah:'½ bh'},{nama:'Daun bawang',jumlah:'2 btg'},{nama:'Kecap asin',jumlah:'2 sdm'},{nama:'Saus tiram',jumlah:'1 sdm'},{nama:'Minyak wijen',jumlah:'1 sdt'},{nama:'Minyak goreng',jumlah:'3 sdm'}],
+langkah:['Tumis bawang putih dan bawang bombay hingga harum.','Masukkan kimchi, tumis 2 mnt hingga aromanya keluar.','Masukkan nasi, bumbui kecap asin dan saus tiram.','Masak di api besar sambil diaduk.','Buat lubang, orak-arik telur lalu campur dengan nasi.','Masukkan daun bawang, teteskan minyak wijen. Sajikan.'],
+tips:'Kimchi yang sudah tua/asam lebih enak untuk dimasak karena rasanya lebih kompleks.'},
+
+{id:19,emoji:'🍛',title:'Kari Ayam Thailand',origin:'asia',category:'utama',waktu:'40 mnt',porsi:'3 porsi',tingkat:'Menengah',
+bahan:[{nama:'Ayam potong',jumlah:'400 g'},{nama:'Santan kental',jumlah:'400 ml'},{nama:'Pasta kari merah',jumlah:'2 sdm'},{nama:'Paprika merah',jumlah:'1 bh'},{nama:'Terong ungu',jumlah:'1 bh'},{nama:'Daun jeruk',jumlah:'4 lbr'},{nama:'Serai',jumlah:'2 btg'},{nama:'Saus ikan',jumlah:'2 sdm'},{nama:'Gula merah',jumlah:'1 sdt'},{nama:'Kemangi',jumlah:'sck'}],
+langkah:['Tumis pasta kari hingga harum.','Masukkan setengah santan, masak hingga berminyak.','Masukkan ayam, masak hingga berubah warna.','Tuang sisa santan, serai, daun jeruk.','Bumbui saus ikan dan gula. Masak 15 mnt.','Masukkan paprika dan terong. Masak 7 mnt.','Taburi kemangi, sajikan dengan nasi.'],
+tips:'Pasta kari kemasan tersedia di supermarket modern, lebih praktis tanpa perlu membuat dari awal.'},
+
+{id:20,emoji:'🥢',title:'Dim Sum Hakau Udang',origin:'asia',category:'utama',waktu:'60 mnt',porsi:'4 porsi',tingkat:'Sulit',
+bahan:[{nama:'Udang kupas cincang',jumlah:'300 g'},{nama:'Rebung, cincang',jumlah:'50 g'},{nama:'Tepung terigu',jumlah:'150 g'},{nama:'Tepung tapioka',jumlah:'50 g'},{nama:'Air mendidih',jumlah:'150 ml'},{nama:'Minyak wijen',jumlah:'1 sdm'},{nama:'Kecap asin',jumlah:'1 sdm'},{nama:'Gula',jumlah:'½ sdt'},{nama:'Merica putih',jumlah:'¼ sdt'},{nama:'Garam',jumlah:'sck'}],
+langkah:['Buat kulit: campur terigu dan tapioka, siram air mendidih sambil diaduk. Uleni hingga kalis.','Buat isian: campur udang, rebung, minyak wijen, kecap asin, gula, merica, garam.','Giling kulit tipis, cetak bulatan.','Taruh 1 sdt isian di tengah, lipat dan bentuk seperti bulan sabit.','Kukus 8–10 mnt hingga transparan.','Sajikan dengan saus cabai atau kecap asin.'],
+tips:'Kulit yang kenyal tapi tidak sobek adalah kunci — adonan harus pas konsistensinya, tidak terlalu keras atau lunak.'},
+
+{id:21,emoji:'🍜',title:'Ramen Ayam Shoyu',origin:'asia',category:'utama',waktu:'90 mnt',porsi:'2 porsi',tingkat:'Menengah',
+bahan:[{nama:'Mie ramen / mie telur',jumlah:'200 g'},{nama:'Ayam rebus suwir',jumlah:'200 g'},{nama:'Telur rebus setengah matang',jumlah:'2 btr'},{nama:'Jagung manis pipil',jumlah:'sck'},{nama:'Daun bawang iris',jumlah:'2 btg'},{nama:'KALDU: Tulang ayam',jumlah:'500 g'},{nama:'Bawang putih',jumlah:'5 siung'},{nama:'Jahe',jumlah:'3 cm'},{nama:'Kecap asin',jumlah:'3 sdm'},{nama:'Minyak wijen',jumlah:'1 sdm'},{nama:'Garam',jumlah:'sck'}],
+langkah:['Rebus tulang ayam 1 jam dengan bawang putih dan jahe. Saring kaldu.','Bumbui kaldu dengan kecap asin, garam, minyak wijen.','Rendam telur matang dalam kecap manis + air 1 jam (shoyu egg).','Rebus mie sesuai petunjuk, tiriskan.','Panaskan kuah, tuang ke mangkuk.','Tata mie, suwiran ayam, telur iris, jagung, daun bawang.'],
+tips:'Kaldu yang direbus lama menghasilkan sup yang lebih kaya rasa. Simpan kaldu berlebih di freezer.'},
+
+{id:22,emoji:'🥩',title:'Bulgogi Sapi Korea',origin:'asia',category:'utama',waktu:'35 mnt',porsi:'3 porsi',tingkat:'Mudah',
+bahan:[{nama:'Daging sapi has dalam, iris tipis',jumlah:'350 g'},{nama:'Bawang bombay',jumlah:'½ bh'},{nama:'Daun bawang',jumlah:'2 btg'},{nama:'Wijen sangrai',jumlah:'1 sdm'},{nama:'MARINADE: Kecap asin',jumlah:'3 sdm'},{nama:'Gula pasir',jumlah:'2 sdm'},{nama:'Bawang putih halus',jumlah:'3 siung'},{nama:'Minyak wijen',jumlah:'1 sdm'},{nama:'Merica hitam',jumlah:'½ sdt'},{nama:'Pir / apel parut',jumlah:'2 sdm'}],
+langkah:['Campur semua bahan marinade.','Masukkan daging iris tipis, aduk rata. Diamkan 30 mnt (minimal).','Panaskan teflon/grill di api besar.','Masak daging beserta marinade hingga karamel dan matang.','Masukkan bawang bombay dan daun bawang, masak 2 mnt.','Taburi wijen, sajikan dengan nasi dan kimchi.'],
+tips:'Buah pir/apel parut yang mengandung enzim alami membuat daging lebih empuk dan manis alami.'},
+
+{id:23,emoji:'🍱',title:'Nasi Putih Telur Dadar Gulung',origin:'asia',category:'utama',waktu:'20 mnt',porsi:'2 porsi',tingkat:'Mudah',
+bahan:[{nama:'Nasi putih',jumlah:'2 piring'},{nama:'Telur',jumlah:'4 btr'},{nama:'Wortel parut',jumlah:'1 bh'},{nama:'Daun bawang iris',jumlah:'2 btg'},{nama:'Kecap asin',jumlah:'1 sdm'},{nama:'Garam & merica',jumlah:'sck'},{nama:'Minyak goreng',jumlah:'2 sdm'},{nama:'ISIAN: Nasi goreng sederhana',jumlah:'2 piring'}],
+langkah:['Kocok telur dengan kecap asin, garam, merica, daun bawang, wortel.','Panaskan minyak tipis di teflon, tuang setengah adonan telur. Putar teflon agar tipis merata.','Sebelum telur kering, taruh nasi di salah satu sisi.','Gulung telur melingkupi nasi dengan hati-hati.','Masak 1–2 mnt lagi. Angkat, iris miring.','Sajikan dengan saus sambal.'],
+tips:'Telur harus setengah matang sebelum digulung agar tidak sobek saat dilipat.'},
+
+{id:24,emoji:'🍛',title:'Laksa Lemak',origin:'asia',category:'utama',waktu:'50 mnt',porsi:'4 porsi',tingkat:'Menengah',
+bahan:[{nama:'Mie bihun / vermicelli',jumlah:'200 g'},{nama:'Udang',jumlah:'200 g'},{nama:'Tahu goreng',jumlah:'4 ptg'},{nama:'Santan kental',jumlah:'400 ml'},{nama:'BUMBU LAKSA: Bawang merah',jumlah:'6 siung'},{nama:'Bawang putih',jumlah:'4 siung'},{nama:'Cabai merah',jumlah:'4 bh'},{nama:'Serai',jumlah:'2 btg'},{nama:'Lengkuas',jumlah:'2 cm'},{nama:'Kunyit',jumlah:'2 cm'},{nama:'Kemiri',jumlah:'3 btr'},{nama:'Udang ebi',jumlah:'2 sdm'},{nama:'Daun jeruk',jumlah:'3 lbr'},{nama:'Garam & gula',jumlah:'sck'}],
+langkah:['Haluskan semua bumbu laksa.','Tumis bumbu hingga harum dan berminyak.','Tuang santan dan 500 ml air, didihkan.','Masukkan udang, masak hingga matang.','Bumbui garam dan gula.','Rendam bihun air panas, tiriskan.','Tata bihun dan tahu di mangkuk, siram kuah laksa panas.'],
+tips:'Udang ebi yang ditumis bersama bumbu memberikan rasa umami yang dalam pada kuah laksa.'},
+
+// ═══════════════ EROPA - MENU UTAMA ═══════════════
+{id:25,emoji:'🍝',title:'Spaghetti Bolognese',origin:'eropa',category:'utama',waktu:'50 mnt',porsi:'4 porsi',tingkat:'Mudah',
+bahan:[{nama:'Spaghetti',jumlah:'300 g'},{nama:'Daging sapi cincang',jumlah:'300 g'},{nama:'Tomat kaleng',jumlah:'400 g'},{nama:'Pasta tomat',jumlah:'3 sdm'},{nama:'Bawang bombay',jumlah:'1 bh'},{nama:'Bawang putih',jumlah:'4 siung'},{nama:'Wortel',jumlah:'1 bh'},{nama:'Oregano kering',jumlah:'1 sdt'},{nama:'Garam & merica',jumlah:'sck'},{nama:'Minyak goreng',jumlah:'3 sdm'},{nama:'Keju parut',jumlah:'sck'}],
+langkah:['Rebus spaghetti dengan garam hingga al dente.','Tumis bawang bombay, bawang putih, wortel hingga layu.','Masukkan daging cincang, masak hingga matang.','Tambahkan pasta tomat, aduk 2 mnt.','Masukkan tomat kaleng, oregano, garam, merica. Masak 25 mnt api kecil.','Sajikan saus di atas spaghetti, taburi keju.'],
+tips:'Saus bolognese yang dimasak lama dengan api kecil menghasilkan rasa yang jauh lebih kaya.'},
+
+{id:26,emoji:'🍕',title:'Pizza Rumahan',origin:'eropa',category:'utama',waktu:'90 mnt',porsi:'2 pizza',tingkat:'Menengah',
+bahan:[{nama:'Tepung terigu protein tinggi',jumlah:'300 g'},{nama:'Ragi instan',jumlah:'1 sdt'},{nama:'Garam',jumlah:'1 sdt'},{nama:'Gula',jumlah:'1 sdt'},{nama:'Air hangat',jumlah:'180 ml'},{nama:'Minyak zaitun / goreng',jumlah:'2 sdm'},{nama:'TOPPING: Saus tomat pizza',jumlah:'5 sdm'},{nama:'Keju mozarella parut',jumlah:'200 g'},{nama:'Sosis / ayam suwir',jumlah:'100 g'},{nama:'Paprika',jumlah:'1 bh'},{nama:'Jagung manis',jumlah:'sck'},{nama:'Oregano kering',jumlah:'sck'}],
+langkah:['Campur tepung, ragi, gula, garam. Tuang air hangat dan minyak, uleni 10 mnt.','Diamkan adonan 1 jam hingga mengembang.','Panaskan oven 220°C.','Giling adonan tipis, taruh di loyang beroles minyak.','Oleskan saus tomat, taburi topping, tutup keju.','Taburkan oregano. Panggang 15–20 mnt hingga keju meleleh dan pinggir kecokelatan.'],
+tips:'Untuk hasil terbaik, panaskan loyang di oven terlebih dahulu sebelum meletakkan pizza agar alas pizza crispy.'},
+
+{id:27,emoji:'🥗',title:'Chicken Caesar Salad',origin:'eropa',category:'utama',waktu:'25 mnt',porsi:'2 porsi',tingkat:'Mudah',
+bahan:[{nama:'Dada ayam',jumlah:'1 bh'},{nama:'Selada romaine',jumlah:'1 kepala'},{nama:'Roti tawar',jumlah:'2 lbr'},{nama:'Keju parut',jumlah:'40 g'},{nama:'DRESSING: Mayones',jumlah:'4 sdm'},{nama:'Keju parut',jumlah:'2 sdm'},{nama:'Jeruk nipis',jumlah:'1 sdm'},{nama:'Bawang putih halus',jumlah:'1 siung'},{nama:'Kecap inggris',jumlah:'1 sdt'},{nama:'Garam & merica',jumlah:'sck'}],
+langkah:['Panggang roti bentuk dadu hingga garing (crouton).','Bakar dada ayam dengan garam dan merica, iris tipis serong.','Campur semua bahan dressing.','Cuci dan potong selada.','Aduk selada dengan dressing.','Tata di piring, letakkan ayam dan crouton, taburi keju.'],
+tips:'Sajikan segera setelah dicampur dressing agar selada tidak layu.'},
+
+{id:28,emoji:'🥘',title:'Chicken Cacciatore',origin:'eropa',category:'utama',waktu:'60 mnt',porsi:'4 porsi',tingkat:'Menengah',
+bahan:[{nama:'Ayam potong',jumlah:'1 ekor'},{nama:'Tomat kaleng',jumlah:'400 g'},{nama:'Paprika merah & hijau',jumlah:'2 bh'},{nama:'Jamur kancing',jumlah:'100 g'},{nama:'Bawang bombay',jumlah:'1 bh'},{nama:'Bawang putih',jumlah:'4 siung'},{nama:'Oregano & thyme',jumlah:'1 sdt each'},{nama:'Daun salam',jumlah:'2 lbr'},{nama:'Garam & merica',jumlah:'sck'},{nama:'Minyak goreng',jumlah:'3 sdm'}],
+langkah:['Beri garam dan merica pada ayam, goreng sebentar hingga kecokelatan.','Tumis bawang bombay dan bawang putih.','Masukkan paprika, jamur, tumis 3 mnt.','Tuang tomat kaleng, tambahkan oregano, thyme, salam.','Masukkan ayam, masak 35 mnt hingga saus mengental.','Koreksi rasa, sajikan dengan pasta atau roti.'],
+tips:'Memanggang ayam sebentar sebelum dimasak dalam saus memberikan warna dan rasa yang lebih kaya.'},
+
+{id:29,emoji:'🍲',title:'Beef Stew',origin:'eropa',category:'utama',waktu:'120 mnt',porsi:'4 porsi',tingkat:'Menengah',
+bahan:[{nama:'Daging sapi potong dadu',jumlah:'500 g'},{nama:'Kentang',jumlah:'3 bh'},{nama:'Wortel',jumlah:'2 bh'},{nama:'Bawang bombay',jumlah:'1 bh'},{nama:'Bawang putih',jumlah:'4 siung'},{nama:'Pasta tomat',jumlah:'2 sdm'},{nama:'Kecap inggris',jumlah:'1 sdm'},{nama:'Tepung terigu',jumlah:'2 sdm'},{nama:'Kaldu sapi / air',jumlah:'500 ml'},{nama:'Thyme & rosemary',jumlah:'sck'},{nama:'Garam & merica',jumlah:'sck'}],
+langkah:['Lumuri daging dengan tepung, garam, merica. Goreng sebentar hingga kecokelatan.','Tumis bawang bombay dan bawang putih.','Masukkan pasta tomat, aduk 2 mnt.','Masukkan daging, tuang kaldu. Bumbui kecap inggris, thyme, rosemary.','Masak api kecil 60–90 mnt hingga daging empuk.','Masukkan kentang dan wortel, masak 20 mnt.','Koreksi rasa, sajikan panas.'],
+tips:'Beef stew semakin enak keesokan harinya. Buat dalam jumlah banyak dan simpan di kulkas.'},
+
+{id:30,emoji:'🥩',title:'Chicken Schnitzel',origin:'eropa',category:'utama',waktu:'30 mnt',porsi:'3 porsi',tingkat:'Mudah',
+bahan:[{nama:'Dada ayam, pipihkan',jumlah:'3 bh'},{nama:'Tepung terigu',jumlah:'100 g'},{nama:'Telur kocok',jumlah:'2 btr'},{nama:'Tepung roti / panko',jumlah:'150 g'},{nama:'Garam & merica',jumlah:'sck'},{nama:'Paprika bubuk',jumlah:'½ sdt'},{nama:'Bawang putih bubuk',jumlah:'½ sdt'},{nama:'Minyak goreng',jumlah:'Banyak'},{nama:'Jeruk lemon',jumlah:'1 bh'}],
+langkah:['Pukul-pukul dada ayam hingga tipis merata sekitar 1 cm.','Bumbui ayam dengan garam, merica, paprika, bawang putih bubuk.','Celupkan berturut: tepung terigu → telur → tepung roti.','Goreng dalam minyak banyak di api sedang, 3–4 mnt per sisi.','Tiriskan. Sajikan dengan perasan lemon dan salad.'],
+tips:'Memipihkan ayam memastikan matang merata dan tekstur lebih empuk.'},
+
+// ═══════════════ AMERIKA - MENU UTAMA ═══════════════
+{id:31,emoji:'🍔',title:'Beef Burger Homemade',origin:'amerika',category:'utama',waktu:'35 mnt',porsi:'4 porsi',tingkat:'Mudah',
+bahan:[{nama:'Daging sapi cincang',jumlah:'400 g'},{nama:'Roti burger',jumlah:'4 bh'},{nama:'Keju slice',jumlah:'4 lbr'},{nama:'Selada',jumlah:'4 lbr'},{nama:'Tomat iris',jumlah:'2 bh'},{nama:'Bawang bombay',jumlah:'1 bh'},{nama:'Acar mentimun',jumlah:'sck'},{nama:'Garam & merica',jumlah:'sck'},{nama:'Bawang putih bubuk',jumlah:'½ sdt'},{nama:'Mayones',jumlah:'3 sdm'},{nama:'Saus tomat',jumlah:'2 sdm'}],
+langkah:['Campur daging dengan garam, merica, bawang putih bubuk. Bentuk bulatan pipih.','Masak patty di teflon panas tanpa minyak, 3–4 mnt per sisi.','Taruh keju 1 mnt sebelum diangkat.','Panggang roti di teflon kering.','Susun: roti → saus → selada → tomat → bawang → patty → acar → roti atas.'],
+tips:'Jangan menekan patty saat dimasak karena akan mengeluarkan cairan dan burger menjadi kering.'},
+
+{id:32,emoji:'🌮',title:'Chicken Tacos',origin:'amerika',category:'utama',waktu:'30 mnt',porsi:'3 porsi',tingkat:'Mudah',
+bahan:[{nama:'Dada ayam dadu',jumlah:'300 g'},{nama:'Tortilla / kulit lumpia',jumlah:'6 lbr'},{nama:'Kol iris halus',jumlah:'100 g'},{nama:'Tomat dadu',jumlah:'2 bh'},{nama:'Alpukat',jumlah:'1 bh'},{nama:'Ketumbar bubuk',jumlah:'1 sdt'},{nama:'Jintan',jumlah:'½ sdt'},{nama:'Paprika bubuk',jumlah:'1 sdt'},{nama:'Bawang putih bubuk',jumlah:'½ sdt'},{nama:'Jeruk nipis',jumlah:'1 bh'},{nama:'Garam & merica',jumlah:'sck'}],
+langkah:['Bumbu ayam dengan ketumbar, jintan, paprika, bawang putih bubuk, garam.','Goreng ayam hingga matang dan sedikit karamel.','Hancurkan alpukat dengan garam dan jeruk nipis (guacamole).','Hangatkan tortilla di teflon kering.','Susun: tortilla → ayam → kol → tomat → guacamole → perasan jeruk.'],
+tips:'Kulit lumpia bisa menjadi pengganti tortilla yang mudah dicari di Indonesia.'},
+
+{id:33,emoji:'🍗',title:'Ayam Goreng BBQ',origin:'amerika',category:'utama',waktu:'60 mnt',porsi:'4 porsi',tingkat:'Mudah',
+bahan:[{nama:'Ayam potong',jumlah:'8 ptg'},{nama:'Garam & merica',jumlah:'sck'},{nama:'Bawang putih bubuk',jumlah:'1 sdt'},{nama:'SAUS BBQ: Saus tomat',jumlah:'5 sdm'},{nama:'Kecap manis',jumlah:'3 sdm'},{nama:'Cuka / air jeruk nipis',jumlah:'1 sdm'},{nama:'Bawang putih halus',jumlah:'2 siung'},{nama:'Madu',jumlah:'1 sdm'},{nama:'Paprika bubuk',jumlah:'1 sdt'},{nama:'Garam',jumlah:'sck'}],
+langkah:['Lumuri ayam dengan garam, merica, bawang putih bubuk.','Buat saus BBQ: campur semua bahan saus, masak sebentar 5 mnt.','Panggang ayam di oven 180°C selama 35 mnt.','Keluarkan, olesi saus BBQ, panggang lagi 15 mnt.','Keluarkan, olesi saus sekali lagi. Sajikan dengan kentang goreng.'],
+tips:'Saus BBQ yang diaplikasikan dua kali memberikan lapisan karamel yang lebih tebal dan mengkilap.'},
+
+{id:34,emoji:'🌯',title:'Beef Burrito',origin:'amerika',category:'utama',waktu:'40 mnt',porsi:'4 porsi',tingkat:'Mudah',
+bahan:[{nama:'Daging sapi cincang',jumlah:'300 g'},{nama:'Tortilla besar / roti pita',jumlah:'4 lbr'},{nama:'Nasi putih',jumlah:'2 piring'},{nama:'Kacang hitam kaleng / rebus',jumlah:'100 g'},{nama:'Jagung manis',jumlah:'sck'},{nama:'Keju parut',jumlah:'80 g'},{nama:'Bawang bombay',jumlah:'1 bh'},{nama:'Bawang putih',jumlah:'3 siung'},{nama:'Ketumbar bubuk',jumlah:'1 sdt'},{nama:'Jintan',jumlah:'½ sdt'},{nama:'Garam & merica',jumlah:'sck'},{nama:'Saus salsa / saus tomat',jumlah:'sck'}],
+langkah:['Tumis bawang bombay dan bawang putih, masukkan daging.','Bumbui daging dengan ketumbar, jintan, garam, merica.','Hangatkan tortilla.','Tata nasi di tengah tortilla, tambahkan daging, kacang, jagung, keju.','Lipat sisi bawah, lipat kedua sisi, gulung rapat.','Panggang di teflon kering hingga kulit sedikit crispy.'],
+tips:'Lipat burrito dengan kencang agar isian tidak tumpah saat dimakan.'},
+
+{id:35,emoji:'🥗',title:'Coleslaw Segar',origin:'amerika',category:'utama',waktu:'15 mnt',porsi:'4 porsi',tingkat:'Mudah',
+bahan:[{nama:'Kol putih iris halus',jumlah:'300 g'},{nama:'Wortel parut',jumlah:'2 bh'},{nama:'Bawang bombay iris tipis',jumlah:'¼ bh'},{nama:'DRESSING: Mayones',jumlah:'4 sdm'},{nama:'Cuka putih / jeruk nipis',jumlah:'2 sdm'},{nama:'Gula pasir',jumlah:'2 sdt'},{nama:'Garam & merica',jumlah:'sck'},{nama:'Biji seledri (opsional)',jumlah:'¼ sdt'}],
+langkah:['Iris kol sangat halus, parut wortel.','Beri garam pada kol, diamkan 10 mnt, peras airnya.','Campur semua bahan dressing.','Aduk kol, wortel, bawang dengan dressing.','Dinginkan di kulkas minimal 30 mnt sebelum disajikan.'],
+tips:'Membuang air dari kol yang sudah diasinkan membuat coleslaw tidak berair dan tetap renyah.'},
+
+// ═══════════════ CAMILAN ═══════════════
+{id:36,emoji:'🥞',title:'Cireng Isi Keju',origin:'indonesia',category:'camilan',waktu:'25 mnt',porsi:'20 pcs',tingkat:'Mudah',
+bahan:[{nama:'Tepung tapioka',jumlah:'200 g'},{nama:'Tepung terigu',jumlah:'50 g'},{nama:'Air mendidih',jumlah:'150 ml'},{nama:'Bawang putih halus',jumlah:'3 siung'},{nama:'Kencur bubuk',jumlah:'½ sdt'},{nama:'Garam',jumlah:'1 sdt'},{nama:'Daun bawang iris',jumlah:'2 btg'},{nama:'Keju cheddar parut',jumlah:'80 g'},{nama:'Minyak goreng',jumlah:'sck'}],
+langkah:['Campur tepung, bawang putih, kencur, garam, daun bawang.','Tuang air mendidih sambil diaduk hingga kalis.','Ambil sejumput adonan, pipihkan, isi keju, rapatkan.','Bentuk bulat pipih.','Goreng api sedang 8–10 mnt hingga matang dan kuning.'],
+tips:'Air mendidih yang benar-benar panas membuat adonan cireng lebih kenyal dan menyatu.'},
+
+{id:37,emoji:'🍩',title:'Donat Kentang Empuk',origin:'indonesia',category:'camilan',waktu:'90 mnt',porsi:'12 pcs',tingkat:'Menengah',
+bahan:[{nama:'Kentang kukus halus',jumlah:'200 g'},{nama:'Tepung terigu protein tinggi',jumlah:'250 g'},{nama:'Ragi instan',jumlah:'1 sdt'},{nama:'Gula',jumlah:'3 sdm'},{nama:'Garam',jumlah:'½ sdt'},{nama:'Telur',jumlah:'1 btr'},{nama:'Susu cair hangat',jumlah:'60 ml'},{nama:'Margarin',jumlah:'2 sdm'},{nama:'Gula halus / cokelat leleh',jumlah:'sck'}],
+langkah:['Campur tepung, ragi, gula, garam.','Tambahkan kentang, telur, susu, uleni rata.','Masukkan margarin, uleni 10–15 mnt hingga elastis.','Istirahatkan 45–60 mnt.','Giling, cetak donat, istirahatkan lagi 15 mnt.','Goreng api sedang 2–3 mnt per sisi.','Hias dengan gula halus atau cokelat.'],
+tips:'Kentang adalah rahasia donat yang sangat empuk dan tidak cepat mengeras.'},
+
+{id:38,emoji:'🥔',title:'Potato Wedges Crispy',origin:'amerika',category:'camilan',waktu:'40 mnt',porsi:'3 porsi',tingkat:'Mudah',
+bahan:[{nama:'Kentang besar',jumlah:'4 bh'},{nama:'Tepung maizena',jumlah:'3 sdm'},{nama:'Bawang putih bubuk',jumlah:'1 sdt'},{nama:'Paprika bubuk',jumlah:'1 sdt'},{nama:'Oregano kering',jumlah:'½ sdt'},{nama:'Garam & merica',jumlah:'sck'},{nama:'Minyak goreng',jumlah:'sck'},{nama:'Mayones',jumlah:'4 sdm'},{nama:'Saus tomat',jumlah:'2 sdm'}],
+langkah:['Potong kentang bentuk wedges, tidak perlu dikupas.','Rebus 8 mnt (setengah matang), tiriskan.','Aduk kentang dengan tepung maizena dan semua bumbu.','Goreng atau panggang oven 200°C hingga crispy.','Sajikan dengan campuran mayones-saus tomat.'],
+tips:'Perebusan singkat sebelum digoreng adalah rahasia kentang yang empuk dalam dan renyah luar.'},
+
+{id:39,emoji:'🧆',title:'Tahu Bakso Crispy',origin:'indonesia',category:'camilan',waktu:'30 mnt',porsi:'15 pcs',tingkat:'Mudah',
+bahan:[{nama:'Tahu putih diperas',jumlah:'300 g'},{nama:'Ayam/udang cincang',jumlah:'100 g'},{nama:'Tepung tapioka',jumlah:'3 sdm'},{nama:'Telur',jumlah:'1 btr'},{nama:'Bawang putih halus',jumlah:'3 siung'},{nama:'Daun bawang iris',jumlah:'2 btg'},{nama:'Garam & merica',jumlah:'sck'},{nama:'Tepung roti',jumlah:'100 g'},{nama:'Telur untuk pencelup',jumlah:'1 btr'}],
+langkah:['Peras tahu hingga kering, haluskan.','Campur tahu, ayam, tapioka, telur, bumbu. Aduk rata.','Bentuk bulatan.','Celupkan ke telur, gulingkan ke tepung roti.','Goreng api sedang-banyak 5–7 mnt hingga keemasan.'],
+tips:'Tahu yang diperas kering menghasilkan bakso yang lebih padat dan tidak hancur saat digoreng.'},
+
+{id:40,emoji:'🫔',title:'Lumpia Sayur',origin:'asia',category:'camilan',waktu:'45 mnt',porsi:'15 pcs',tingkat:'Menengah',
+bahan:[{nama:'Kulit lumpia',jumlah:'15 lbr'},{nama:'Wortel parut',jumlah:'2 bh'},{nama:'Kol iris halus',jumlah:'200 g'},{nama:'Taoge',jumlah:'100 g'},{nama:'Bawang putih',jumlah:'4 siung'},{nama:'Daun bawang',jumlah:'3 btg'},{nama:'Kecap asin',jumlah:'2 sdm'},{nama:'Garam & merica',jumlah:'sck'},{nama:'Minyak goreng',jumlah:'sck'},{nama:'Tepung terigu + air perekat',jumlah:'sck'}],
+langkah:['Tumis bawang putih, masukkan wortel, kol, tumis layu.','Bumbui, masukkan taoge dan daun bawang. Tiriskan isian.','Ambil kulit lumpia, taruh isian, gulung rapat.','Rekatkan ujung dengan pasta tepung.','Goreng hingga kecokelatan.'],
+tips:'Isian harus benar-benar tiris agar kulit lumpia tidak cepat sobek saat digoreng.'},
+
+{id:41,emoji:'🍪',title:'Cookies Oatmeal Choco Chip',origin:'amerika',category:'camilan',waktu:'30 mnt',porsi:'24 pcs',tingkat:'Mudah',
+bahan:[{nama:'Tepung terigu',jumlah:'150 g'},{nama:'Oatmeal rolled',jumlah:'150 g'},{nama:'Mentega / margarin',jumlah:'125 g'},{nama:'Gula pasir',jumlah:'100 g'},{nama:'Gula merah',jumlah:'50 g'},{nama:'Telur',jumlah:'1 btr'},{nama:'Baking soda',jumlah:'½ sdt'},{nama:'Garam',jumlah:'¼ sdt'},{nama:'Vanilla',jumlah:'1 sdt'},{nama:'Cokelat chips / cokelat cincang',jumlah:'100 g'}],
+langkah:['Kocok mentega dan gula hingga creamy.','Masukkan telur dan vanilla, kocok rata.','Masukkan tepung, oatmeal, baking soda, garam. Aduk rata.','Masukkan cokelat chips.','Taruh sendok makan di loyang beroles margarin. Beri jarak.','Panggang oven 175°C selama 12–14 mnt.','Dinginkan di rak kawat.'],
+tips:'Keluarkan dari oven saat masih sedikit lunak di tengah — akan mengeras saat mendingin.'},
+
+{id:42,emoji:'🧇',title:'Pisang Goreng Tepung Crispy',origin:'indonesia',category:'camilan',waktu:'20 mnt',porsi:'4 porsi',tingkat:'Mudah',
+bahan:[{nama:'Pisang kepok / tanduk',jumlah:'6 bh'},{nama:'Tepung terigu',jumlah:'150 g'},{nama:'Tepung beras',jumlah:'50 g'},{nama:'Tepung tapioka',jumlah:'2 sdm'},{nama:'Gula pasir',jumlah:'2 sdm'},{nama:'Garam',jumlah:'½ sdt'},{nama:'Vanili',jumlah:'¼ sdt'},{nama:'Air es',jumlah:'180 ml'},{nama:'Minyak goreng',jumlah:'sck'}],
+langkah:['Kupas pisang, belah dua memanjang.','Campur tepung terigu, tepung beras, tapioka, gula, garam, vanili.','Tuang air es sedikit-sedikit, aduk hingga adonan kental tidak terlalu cair.','Celupkan pisang ke adonan, goreng dalam minyak panas banyak.','Goreng api sedang-besar hingga keemasan dan crispy.'],
+tips:'Air es membuat adonan tepung lebih crispy saat digoreng karena perbedaan suhu dengan minyak panas.'},
+
+{id:43,emoji:'🍡',title:'Klepon Pandan',origin:'indonesia',category:'camilan',waktu:'35 mnt',porsi:'25 pcs',tingkat:'Menengah',
+bahan:[{nama:'Tepung ketan',jumlah:'250 g'},{nama:'Air pandan (daun pandan + air)',jumlah:'150 ml'},{nama:'Garam',jumlah:'¼ sdt'},{nama:'Gula merah serut (isian)',jumlah:'150 g'},{nama:'Kelapa parut kasar + garam',jumlah:'200 g'}],
+langkah:['Buat air pandan: blender daun pandan + air, saring.','Campur tepung ketan dengan air pandan dan garam, uleni hingga kalis.','Ambil sejumput adonan, pipihkan, isi gula merah, bulatkan.','Rebus air mendidih, masukkan klepon.','Masak hingga mengapung, tiriskan.','Gulingkan di atas kelapa parut yang sudah dikukus dan diberi garam.'],
+tips:'Klepon yang matang akan mengapung — jangan mengangkat sebelum mengapung agar tidak ada yang mentah.'},
+
+{id:44,emoji:'🥚',title:'Martabak Mini Telur',origin:'indonesia',category:'camilan',waktu:'25 mnt',porsi:'8 pcs',tingkat:'Mudah',
+bahan:[{nama:'Kulit lumpia',jumlah:'8 lbr'},{nama:'Telur',jumlah:'4 btr'},{nama:'Daging cincang / sosis',jumlah:'100 g'},{nama:'Bawang putih iris',jumlah:'3 siung'},{nama:'Daun bawang iris',jumlah:'3 btg'},{nama:'Kecap asin',jumlah:'1 sdm'},{nama:'Merica',jumlah:'sck'},{nama:'Minyak goreng',jumlah:'sck'}],
+langkah:['Tumis bawang putih dan daging/sosis hingga matang.','Kocok telur dengan kecap asin, merica, dan daun bawang.','Ambil kulit lumpia, taruh di teflon beroles minyak.','Tuang isian dan telur kocok di atasnya.','Lipat menjadi persegi, tekan tepinya.','Goreng kedua sisi hingga kecokelatan.'],
+tips:'Kulit lumpia harus segera dilipat setelah telur dituang agar tidak sempat mengeras.'},
+
+{id:45,emoji:'🍦',title:'Es Krim Santan Pandan',origin:'indonesia',category:'camilan',waktu:'30 mnt',porsi:'6 porsi',tingkat:'Mudah',
+bahan:[{nama:'Santan kental',jumlah:'400 ml'},{nama:'Gula pasir',jumlah:'150 g'},{nama:'Telur kuning',jumlah:'3 btr'},{nama:'Tepung maizena',jumlah:'2 sdm'},{nama:'Pasta pandan / daun pandan',jumlah:'sck'},{nama:'Garam',jumlah:'¼ sdt'}],
+langkah:['Kocok kuning telur dan gula hingga pucat.','Larutkan maizena dengan sedikit santan.','Panaskan santan dengan pasta pandan dan garam.','Masukkan campuran telur dan maizena ke santan panas, aduk terus.','Masak hingga mengental. Dinginkan.','Masukkan ke freezer, aduk tiap 2 jam selama 6 jam.'],
+tips:'Mengaduk setiap 2 jam mencegah pembentukan kristal es sehingga es krim lebih lembut.'},
+
+{id:46,emoji:'🫓',title:'Roti Bakar Susu Keju',origin:'indonesia',category:'camilan',waktu:'10 mnt',porsi:'2 porsi',tingkat:'Mudah',
+bahan:[{nama:'Roti tawar tebal',jumlah:'4 lbr'},{nama:'Mentega / margarin',jumlah:'2 sdm'},{nama:'Susu kental manis',jumlah:'3 sdm'},{nama:'Keju cheddar parut',jumlah:'60 g'},{nama:'Meses cokelat (opsional)',jumlah:'sck'}],
+langkah:['Oles satu sisi roti dengan mentega.','Panggang di teflon sisi mentega ke bawah hingga keemasan.','Angkat, oleskan susu kental manis di sisi atas.','Taburi keju parut dan meses.','Tutup dengan irisan roti lain, tekan sedikit.','Potong diagonal dan sajikan.'],
+tips:'Roti bakar paling enak dimakan panas, sesaat setelah keju meleleh.'},
+
+{id:47,emoji:'🥜',title:'Tempe Mendoan',origin:'indonesia',category:'camilan',waktu:'20 mnt',porsi:'4 porsi',tingkat:'Mudah',
+bahan:[{nama:'Tempe tipis (khusus mendoan)',jumlah:'300 g'},{nama:'Tepung terigu',jumlah:'150 g'},{nama:'Tepung beras',jumlah:'2 sdm'},{nama:'Bawang putih halus',jumlah:'3 siung'},{nama:'Ketumbar bubuk',jumlah:'½ sdt'},{nama:'Kunyit',jumlah:'¼ sdt'},{nama:'Daun bawang iris halus',jumlah:'2 btg'},{nama:'Garam',jumlah:'sck'},{nama:'Air',jumlah:'150 ml'}],
+langkah:['Campur tepung terigu, tepung beras, dan semua bumbu.','Tuang air sedikit-sedikit hingga adonan cukup cair (bisa mengalir).','Masukkan daun bawang ke adonan.','Celupkan tempe ke adonan, goreng dalam minyak sedang-banyak.','Goreng sebentar saja, tidak perlu terlalu kering.'],
+tips:'Mendoan khas Banyumas sengaja digoreng setengah matang agar bagian dalamnya lembut dan tepungnya tidak crispy.'},
+
+{id:48,emoji:'🎂',title:'Bolu Kukus Mekar',origin:'indonesia',category:'camilan',waktu:'35 mnt',porsi:'12 pcs',tingkat:'Mudah',
+bahan:[{nama:'Tepung terigu',jumlah:'250 g'},{nama:'Gula pasir',jumlah:'200 g'},{nama:'Telur',jumlah:'3 btr'},{nama:'Santan / susu cair',jumlah:'200 ml'},{nama:'Baking powder',jumlah:'1½ sdt'},{nama:'Soda kue',jumlah:'¼ sdt'},{nama:'Vanili',jumlah:'½ sdt'},{nama:'Pewarna makanan (opsional)',jumlah:'sck'}],
+langkah:['Kocok telur dan gula hingga putih dan kental.','Masukkan santan, kocok sebentar.','Masukkan tepung, baking powder, soda kue, vanili. Aduk rata.','Siapkan kukusan panas. Lapisi tutupnya dengan kain.','Tuang adonan ke cetakan hingga ¾ penuh.','Kukus 15–20 mnt hingga mekar dan matang.'],
+tips:'Kukusan harus sudah panas sebelum bolu dimasukkan agar mekar sempurna. Tutup kukusan jangan dibuka dulu 10 mnt pertama.'},
+
+{id:49,emoji:'🍱',title:'Onigiri Tuna Mayo',origin:'asia',category:'camilan',waktu:'20 mnt',porsi:'6 pcs',tingkat:'Mudah',
+bahan:[{nama:'Nasi putih hangat',jumlah:'2 piring'},{nama:'Tuna kaleng, tiriskan',jumlah:'1 kaleng'},{nama:'Mayones',jumlah:'2 sdm'},{nama:'Kecap asin',jumlah:'1 sdt'},{nama:'Merica',jumlah:'sck'},{nama:'Nori / rumput laut kering',jumlah:'6 strip'},{nama:'Garam',jumlah:'sck'}],
+langkah:['Campur tuna, mayones, kecap asin, merica.','Beri garam pada nasi, aduk rata.','Ambil segenggam nasi, pipihkan di telapak tangan.','Taruh 1 sdt isian tuna di tengah.','Bentuk menjadi segitiga dengan menekan kuat.','Bungkus bagian bawah dengan nori.'],
+tips:'Tangan yang sedikit dibasahi air garam mencegah nasi menempel dan memudahkan pembentukan.'},
+
+{id:50,emoji:'🧀',title:'Risoles Mayo Sayuran',origin:'eropa',category:'camilan',waktu:'45 mnt',porsi:'12 pcs',tingkat:'Menengah',
+bahan:[{nama:'KULIT: Tepung terigu',jumlah:'150 g'},{nama:'Telur',jumlah:'2 btr'},{nama:'Susu cair',jumlah:'250 ml'},{nama:'Garam',jumlah:'¼ sdt'},{nama:'Margarin cair',jumlah:'1 sdm'},{nama:'ISIAN: Wortel & kentang dadu kecil',jumlah:'100 g each'},{nama:'Mayones',jumlah:'4 sdm'},{nama:'Bawang bombay',jumlah:'½ bh'},{nama:'Garam & merica',jumlah:'sck'},{nama:'LAPISAN GORENG: Telur & tepung roti',jumlah:'sck'}],
+langkah:['Buat kulit: campur semua bahan kulit, buat dadar tipis di teflon.','Rebus wortel dan kentang hingga matang, tiriskan.','Tumis bawang bombay, campur dengan sayuran dan mayones.','Taruh isian di tengah kulit, lipat dan gulung.','Celupkan ke telur kocok, gulingkan ke tepung roti.','Goreng hingga keemasan.'],
+tips:'Kulit dadar harus tipis dan rata agar mudah dilipat tanpa sobek.'},
+
+// ═══════════════ MINUMAN ═══════════════
+{id:51,emoji:'🥤',title:'Es Teh Tarik Susu',origin:'indonesia',category:'minuman',waktu:'10 mnt',porsi:'2 gelas',tingkat:'Mudah',
+bahan:[{nama:'Teh celup / teh hitam',jumlah:'3 kantong'},{nama:'Air mendidih',jumlah:'300 ml'},{nama:'Susu kental manis',jumlah:'4 sdm'},{nama:'Gula pasir',jumlah:'2 sdm'},{nama:'Es batu',jumlah:'sck'}],
+langkah:['Seduh teh dengan air mendidih 5 mnt. Angkat kantong.','Tambahkan gula, aduk hingga larut.','Tuang susu kental manis, aduk rata.','Untuk tarik: tuang dari gelas satu ke gelas lain berulang dari ketinggian.','Sajikan dengan es batu.'],
+tips:'Teh untuk teh tarik harus lebih pekat dari biasanya karena akan dicampur susu dan es.'},
+
+{id:52,emoji:'🧋',title:'Boba Brown Sugar Milk Tea',origin:'asia',category:'minuman',waktu:'30 mnt',porsi:'2 gelas',tingkat:'Menengah',
+bahan:[{nama:'Tepung tapioka',jumlah:'100 g'},{nama:'Gula merah',jumlah:'3 sdm + 50 g'},{nama:'Air panas',jumlah:'75 ml + 50 ml'},{nama:'Teh hitam',jumlah:'3 kantong'},{nama:'Air untuk teh',jumlah:'250 ml'},{nama:'Susu cair full cream',jumlah:'300 ml'},{nama:'Es batu',jumlah:'sck'}],
+langkah:['Buat saus: rebus 50 g gula merah + 50 ml air hingga kental. Sisihkan.','Buat boba: larutkan 3 sdm gula merah dalam 75 ml air panas, tuang ke tepung tapioka, uleni.','Bentuk bulatan kecil, rebus 15 mnt hingga mengapung. Rendam dalam saus.','Seduh teh pekat, dinginkan.','Oles sisi gelas dengan saus, masukkan boba dan es.','Tuang susu lalu teh.'],
+tips:'Boba harus segera disajikan setelah dimasak agar tetap kenyal.'},
+
+{id:53,emoji:'🍋',title:'Lemon Squash Soda',origin:'eropa',category:'minuman',waktu:'10 mnt',porsi:'2 gelas',tingkat:'Mudah',
+bahan:[{nama:'Jeruk nipis / lemon',jumlah:'3 bh'},{nama:'Air soda',jumlah:'400 ml'},{nama:'Gula pasir',jumlah:'3 sdm'},{nama:'Air panas',jumlah:'50 ml'},{nama:'Es batu',jumlah:'sck'},{nama:'Daun mint',jumlah:'sck'},{nama:'Garam',jumlah:'sejumput'}],
+langkah:['Larutkan gula dalam air panas, buat sirup. Dinginkan.','Peras jeruk nipis.','Isi gelas dengan es batu.','Tuang sirup, perasan jeruk, dan garam.','Tuang air soda perlahan dari sisi gelas.','Hias dengan irisan jeruk dan mint.'],
+tips:'Sejumput garam memperkuat persepsi rasa segar dan manis secara signifikan.'},
+
+{id:54,emoji:'🥭',title:'Jus Mangga Lassi',origin:'asia',category:'minuman',waktu:'10 mnt',porsi:'2 gelas',tingkat:'Mudah',
+bahan:[{nama:'Mangga harum manis',jumlah:'2 bh'},{nama:'Yogurt plain',jumlah:'200 g'},{nama:'Susu cair',jumlah:'100 ml'},{nama:'Gula / madu',jumlah:'2 sdm'},{nama:'Kapulaga bubuk',jumlah:'sejumput'},{nama:'Es batu',jumlah:'sck'}],
+langkah:['Potong daging mangga.','Blend mangga, yogurt, susu, gula, es batu hingga halus.','Cicipi, tambah gula jika perlu.','Tuang ke gelas, taburi kapulaga.'],
+tips:'Mangga harum manis Indonesia adalah pilihan terbaik untuk lassi karena manisnya alami dan aromanya kuat.'},
+
+{id:55,emoji:'☕',title:'Kopi Susu Gula Aren',origin:'indonesia',category:'minuman',waktu:'10 mnt',porsi:'1 gelas',tingkat:'Mudah',
+bahan:[{nama:'Kopi hitam pekat (tubruk)',jumlah:'60 ml'},{nama:'Susu cair full cream',jumlah:'150 ml'},{nama:'Gula aren cair',jumlah:'3 sdm'},{nama:'Es batu',jumlah:'sck'}],
+langkah:['Buat kopi tubruk pekat, saring ampasnya.','Isi gelas dengan es batu penuh.','Tuang gula aren di atas es.','Tuang susu perlahan dari sisi gelas.','Tuang kopi dari atas agar terbentuk tiga lapisan.','Foto, lalu aduk sebelum diminum.'],
+tips:'Semakin pekat kopinya, semakin enak kontras rasanya dengan susu dan gula aren.'},
+
+{id:56,emoji:'🍵',title:'Wedang Jahe Sereh',origin:'indonesia',category:'minuman',waktu:'15 mnt',porsi:'2 gelas',tingkat:'Mudah',
+bahan:[{nama:'Jahe segar',jumlah:'4 cm'},{nama:'Serai',jumlah:'2 btg'},{nama:'Gula merah',jumlah:'3 sdm'},{nama:'Daun pandan',jumlah:'1 lbr'},{nama:'Air',jumlah:'500 ml'},{nama:'Cengkeh',jumlah:'3 bh'},{nama:'Kayu manis',jumlah:'1 btg'}],
+langkah:['Memarkan jahe dan serai.','Rebus air bersama jahe, serai, pandan, cengkeh, kayu manis.','Setelah mendidih, kecilkan api, masak 10 mnt.','Masukkan gula merah, aduk hingga larut.','Saring, sajikan panas dalam gelas.'],
+tips:'Memarkan jahe sebelum direbus mengeluarkan minyak esensialnya sehingga minuman lebih harum dan hangat.'},
+
+{id:57,emoji:'🥛',title:'Bajigur Bandung',origin:'indonesia',category:'minuman',waktu:'20 mnt',porsi:'4 gelas',tingkat:'Mudah',
+bahan:[{nama:'Santan kental',jumlah:'400 ml'},{nama:'Air',jumlah:'400 ml'},{nama:'Gula merah',jumlah:'150 g'},{nama:'Jahe memarkan',jumlah:'3 cm'},{nama:'Daun pandan',jumlah:'2 lbr'},{nama:'Kopi hitam',jumlah:'1 sdm'},{nama:'Garam',jumlah:'sejumput'}],
+langkah:['Rebus air bersama gula merah, jahe, pandan hingga gula larut.','Saring, kembalikan ke panci.','Masukkan santan, aduk terus agar tidak pecah.','Masukkan kopi hitam dan garam.','Masak api kecil sambil diaduk hingga panas.','Sajikan panas atau hangat.'],
+tips:'Aduk terus saat santan dimasukkan agar bajigur tidak pecah dan terpisah.'},
+
+{id:58,emoji:'🧃',title:'Jus Alpukat Kopi',origin:'indonesia',category:'minuman',waktu:'10 mnt',porsi:'2 gelas',tingkat:'Mudah',
+bahan:[{nama:'Alpukat matang',jumlah:'2 bh'},{nama:'Susu kental manis',jumlah:'4 sdm'},{nama:'Kopi instan / espresso',jumlah:'2 sdt'},{nama:'Air panas',jumlah:'50 ml'},{nama:'Es batu',jumlah:'sck'},{nama:'Susu cair',jumlah:'100 ml'}],
+langkah:['Seduh kopi dengan air panas. Dinginkan.','Keruk daging alpukat.','Blend alpukat, susu kental, susu cair, dan es batu.','Tuang jus alpukat ke gelas hingga ¾.','Tuang kopi perlahan di atasnya agar terlihat berlapis.'],
+tips:'Jus alpukat kopi paling nikmat saat diminum dengan mengaduk lapisan kopi ke dalam jus alpukat.'},
+
+{id:59,emoji:'🍹',title:'Es Cendol Dawet',origin:'indonesia',category:'minuman',waktu:'30 mnt',porsi:'4 gelas',tingkat:'Menengah',
+bahan:[{nama:'CENDOL: Tepung beras',jumlah:'100 g'},{nama:'Tepung sagu',jumlah:'25 g'},{nama:'Air daun pandan',jumlah:'200 ml'},{nama:'Garam',jumlah:'¼ sdt'},{nama:'KUAH: Santan kental',jumlah:'400 ml'},{nama:'Gula merah',jumlah:'200 g'},{nama:'Air',jumlah:'200 ml'},{nama:'Daun pandan',jumlah:'2 lbr'},{nama:'Es batu serut',jumlah:'sck'}],
+langkah:['Buat cendol: campur tepung beras, sagu, air pandan, garam. Masak sambil diaduk hingga mengental.','Tekan adonan melalui cetakan cendol ke air dingin. Tiriskan.','Buat gula merah cair: rebus gula + air + pandan.','Buat santan: masak santan dengan sedikit garam.','Tata cendol di gelas, tuang es serut, siram santan, lalu gula merah.'],
+tips:'Cendol yang baik berwarna hijau cerah dan bertekstur kenyal — kunci ada pada kematangan adonan tepung.'},
+
+{id:60,emoji:'🫖',title:'Teh Tarik Harum',origin:'asia',category:'minuman',waktu:'10 mnt',porsi:'2 gelas',tingkat:'Mudah',
+bahan:[{nama:'Teh celup hitam',jumlah:'4 kantong'},{nama:'Air mendidih',jumlah:'400 ml'},{nama:'Susu evaporasi',jumlah:'80 ml'},{nama:'Susu kental manis',jumlah:'3 sdm'},{nama:'Gula pasir',jumlah:'2 sdm'},{nama:'Es batu',jumlah:'sck'}],
+langkah:['Seduh teh sangat pekat dengan air mendidih 5 mnt.','Angkat teh, tambahkan gula, aduk.','Campur susu evaporasi dan susu kental manis.','Taruh es batu di gelas, tuang campuran susu.','Tuang teh perlahan.','Untuk sajian panas: aduk teh dengan campuran susu, tarik antar gelas.'],
+tips:'Kombinasi susu evaporasi + susu kental manis memberikan rasa yang lebih creamy dan kompleks dibanding susu biasa saja.'},
+
+// TAMBAHAN MENU UTAMA - INDONESIA
+{id:61,emoji:'🍛',title:'Ayam Geprek Sambal Bawang',origin:'indonesia',category:'utama',waktu:'35 mnt',porsi:'3 porsi',tingkat:'Mudah',
+bahan:[{nama:'Paha ayam',jumlah:'4 bh'},{nama:'Tepung terigu',jumlah:'200 g'},{nama:'Tepung tapioka',jumlah:'3 sdm'},{nama:'Bawang putih bubuk',jumlah:'1 sdt'},{nama:'Garam & merica',jumlah:'sck'},{nama:'SAMBAL: Cabai rawit',jumlah:'15 bh'},{nama:'Bawang putih',jumlah:'5 siung'},{nama:'Garam',jumlah:'sck'},{nama:'Minyak goreng panas',jumlah:'3 sdm'}],
+langkah:['Lumuri ayam dengan garam dan merica.','Aduk tepung terigu, tapioka, bawang putih bubuk, garam.','Celupkan ayam ke tepung, goreng hingga crispy.','Buat sambal: ulek kasar cabai rawit, bawang putih, garam, siram minyak panas.','Taruh ayam di cobek, geprek dengan ulekan.','Campur dengan sambal, sajikan dengan nasi.'],
+tips:'Minyak panas yang disiram ke sambal mentah matangkan bumbu instan dan mengeluarkan aroma yang wangi.'},
+
+{id:62,emoji:'🐟',title:'Ikan Pindang Patin',origin:'indonesia',category:'utama',waktu:'40 mnt',porsi:'4 porsi',tingkat:'Mudah',
+bahan:[{nama:'Ikan patin',jumlah:'500 g'},{nama:'Tomat hijau',jumlah:'3 bh'},{nama:'Nanas',jumlah:'100 g'},{nama:'Cabai merah',jumlah:'5 bh'},{nama:'Bawang merah',jumlah:'6 siung'},{nama:'Bawang putih',jumlah:'4 siung'},{nama:'Serai',jumlah:'2 btg'},{nama:'Jahe',jumlah:'2 cm'},{nama:'Kunyit',jumlah:'2 cm'},{nama:'Daun kemangi',jumlah:'sck'},{nama:'Garam & gula',jumlah:'sck'}],
+langkah:['Bersihkan ikan patin, lumuri garam dan kunyit.','Tumis bumbu: bawang merah, bawang putih, cabai, jahe, serai hingga harum.','Tuang air 600 ml, didihkan.','Masukkan tomat hijau dan nanas.','Masukkan ikan, masak hingga matang.','Masukkan kemangi, koreksi rasa.'],
+tips:'Tomat hijau dan nanas memberikan rasa asam segar khas pindang yang tidak bisa digantikan asam buatan.'},
+
+{id:63,emoji:'🥩',title:'Empal Gepuk',origin:'indonesia',category:'utama',waktu:'90 mnt',porsi:'4 porsi',tingkat:'Menengah',
+bahan:[{nama:'Daging sapi (gandik/paha)',jumlah:'500 g'},{nama:'Santan encer',jumlah:'500 ml'},{nama:'Ketumbar',jumlah:'1 sdt'},{nama:'Gula merah',jumlah:'2 sdm'},{nama:'Bawang putih',jumlah:'5 siung'},{nama:'Lengkuas',jumlah:'2 cm'},{nama:'Daun salam',jumlah:'3 lbr'},{nama:'Garam',jumlah:'sck'},{nama:'Minyak goreng',jumlah:'sck'}],
+langkah:['Rebus daging hingga empuk, iris searah serat sekitar 1 cm.','Geprek daging hingga sedikit pipih.','Campur ketumbar, bawang putih, gula merah, garam. Haluskan.','Masak daging dengan santan dan semua bumbu hingga santan terserap.','Goreng daging sebentar hingga kecokelatan dan sedikit karamel.'],
+tips:'Menggeprek daging setelah direbus membuat empal lebih mudah menyerap bumbu saat dimasak.'},
+
+{id:64,emoji:'🍲',title:'Rawon Daging',origin:'indonesia',category:'utama',waktu:'120 mnt',porsi:'5 porsi',tingkat:'Menengah',
+bahan:[{nama:'Daging sapi sandung lamur',jumlah:'500 g'},{nama:'BUMBU: Kluwek',jumlah:'4 bh'},{nama:'Bawang merah',jumlah:'8 siung'},{nama:'Bawang putih',jumlah:'5 siung'},{nama:'Lengkuas',jumlah:'3 cm'},{nama:'Jahe',jumlah:'2 cm'},{nama:'Kunyit',jumlah:'1 cm'},{nama:'Ketumbar',jumlah:'1 sdt'},{nama:'Serai',jumlah:'2 btg'},{nama:'Daun jeruk',jumlah:'5 lbr'},{nama:'Garam & gula',jumlah:'sck'}],
+langkah:['Belah kluwek, ambil isinya, larutkan dalam air hangat.','Rebus daging hingga empuk, sisihkan kaldu.','Haluskan semua bumbu, tambahkan larutan kluwek.','Tumis bumbu halus, serai, daun jeruk hingga harum.','Masukkan daging dan kaldu, masak 30 mnt.','Koreksi rasa, sajikan dengan taoge, telur asin, kerupuk.'],
+tips:'Kluwek adalah kunci warna hitam khas rawon — pilih yang sudah matang (isi berwarna hitam dan beraroma).'},
+
+{id:65,emoji:'🥘',title:'Kare Ayam Jawa',origin:'indonesia',category:'utama',waktu:'60 mnt',porsi:'5 porsi',tingkat:'Menengah',
+bahan:[{nama:'Ayam potong',jumlah:'1 ekor'},{nama:'Santan kental',jumlah:'400 ml'},{nama:'Kentang',jumlah:'3 bh'},{nama:'Bawang merah',jumlah:'8 siung'},{nama:'Bawang putih',jumlah:'5 siung'},{nama:'Kemiri',jumlah:'4 btr'},{nama:'Ketumbar',jumlah:'1½ sdt'},{nama:'Jintan',jumlah:'½ sdt'},{nama:'Kunyit',jumlah:'3 cm'},{nama:'Lengkuas',jumlah:'3 cm'},{nama:'Serai',jumlah:'2 btg'},{nama:'Daun jeruk',jumlah:'4 lbr'},{nama:'Garam & gula',jumlah:'sck'}],
+langkah:['Haluskan bawang merah, bawang putih, kemiri, ketumbar, jintan, kunyit.','Tumis bumbu halus, lengkuas, serai, daun jeruk hingga harum.','Masukkan ayam, aduk rata.','Tuang 500 ml air dan santan, didihkan.','Masukkan kentang, masak 25 mnt hingga empuk.','Koreksi rasa, sajikan dengan nasi dan acar.'],
+tips:'Kare Jawa berbeda dari opor karena menggunakan jintan dan lebih kaya bumbu, memberikan rasa yang lebih dalam.'},
+
+// TAMBAHAN MENU UTAMA - ASIA
+{id:66,emoji:'🍜',title:'Tom Yum Seafood',origin:'asia',category:'utama',waktu:'30 mnt',porsi:'3 porsi',tingkat:'Mudah',
+bahan:[{nama:'Udang ukuran sedang',jumlah:'200 g'},{nama:'Cumi-cumi',jumlah:'150 g'},{nama:'Jamur tiram / kancing',jumlah:'100 g'},{nama:'Serai',jumlah:'3 btg'},{nama:'Daun jeruk',jumlah:'5 lbr'},{nama:'Lengkuas iris',jumlah:'3 cm'},{nama:'Cabai merah',jumlah:'4 bh'},{nama:'Saus ikan',jumlah:'3 sdm'},{nama:'Air jeruk nipis',jumlah:'3 sdm'},{nama:'Gula',jumlah:'1 sdt'},{nama:'Air',jumlah:'700 ml'},{nama:'Daun ketumbar (opsional)',jumlah:'sck'}],
+langkah:['Didihkan air bersama serai geprek, daun jeruk, lengkuas.','Masukkan jamur, masak 5 mnt.','Masukkan udang dan cumi-cumi.','Bumbui dengan saus ikan, jeruk nipis, gula.','Masak 5 mnt, tidak perlu terlalu lama.','Taburi daun ketumbar jika suka.'],
+tips:'Tom yum yang baik punya keseimbangan asam, asin, dan pedas. Jangan masak terlalu lama agar seafood tidak alot.'},
+
+{id:67,emoji:'🥟',title:'Gyoza Goreng',origin:'asia',category:'utama',waktu:'45 mnt',porsi:'4 porsi',tingkat:'Menengah',
+bahan:[{nama:'Kulit gyoza / kulit pangsit beli jadi',jumlah:'30 lbr'},{nama:'ISIAN: Daging ayam/babi cincang',jumlah:'200 g'},{nama:'Kol cincang halus',jumlah:'150 g'},{nama:'Daun bawang',jumlah:'3 btg'},{nama:'Jahe parut',jumlah:'1 cm'},{nama:'Bawang putih',jumlah:'2 siung'},{nama:'Kecap asin',jumlah:'2 sdm'},{nama:'Minyak wijen',jumlah:'1 sdm'},{nama:'Merica',jumlah:'sck'},{nama:'Garam',jumlah:'sck'}],
+langkah:['Beri garam pada kol cincang, peras airnya.','Campur semua bahan isian, aduk rata.','Taruh 1 sdt isian di tengah kulit gyoza.','Basahi pinggir kulit, lipat setengah lingkaran, buat plisket di pinggir.','Panaskan minyak di teflon, taruh gyoza. Goreng 2 mnt.','Tuang 50 ml air, tutup rapat, kukus 5 mnt.','Buka tutup, masak hingga air habis dan bawah kecokelatan.'],
+tips:'Teknik gyoza adalah kombinasi menggoreng dan mengukus (yaki + mushi) yang menghasilkan bawah crispy dan isian lembut.'},
+
+{id:68,emoji:'🍛',title:'Nasi Lemak Malaysia',origin:'asia',category:'utama',waktu:'50 mnt',porsi:'4 porsi',tingkat:'Menengah',
+bahan:[{nama:'Beras',jumlah:'2 cangkir'},{nama:'Santan kental',jumlah:'300 ml'},{nama:'Serai',jumlah:'2 btg'},{nama:'Daun pandan',jumlah:'2 lbr'},{nama:'Garam',jumlah:'sck'},{nama:'SAMBAL: Cabai kering',jumlah:'10 bh'},{nama:'Bawang merah',jumlah:'8 siung'},{nama:'Bawang putih',jumlah:'4 siung'},{nama:'Udang ebi',jumlah:'2 sdm'},{nama:'Gula merah',jumlah:'2 sdm'},{nama:'Asam jawa',jumlah:'1 sdm'}],
+langkah:['Masak nasi dengan santan, serai, pandan, garam seperti memasak nasi biasa.','Rendam cabai kering dalam air panas, tiriskan.','Haluskan cabai, bawang merah, bawang putih.','Tumis bumbu dengan udang ebi, masak hingga berminyak.','Beri gula merah dan asam jawa. Koreksi rasa.','Sajikan nasi lemak dengan sambal, ikan teri goreng, telur rebus, kacang tanah goreng, mentimun.'],
+tips:'Nasi lemak tradisional selalu disajikan dengan sambal ikan bilis (teri) — paduan sempurna nasi berlemak + sambal manis pedas.'},
+
+{id:69,emoji:'🥩',title:'Daging Masak Hitam',origin:'asia',category:'utama',waktu:'90 mnt',porsi:'4 porsi',tingkat:'Menengah',
+bahan:[{nama:'Daging sapi potong',jumlah:'400 g'},{nama:'Kecap hitam / kecap manis pekat',jumlah:'4 sdm'},{nama:'Bawang putih',jumlah:'6 siung'},{nama:'Jahe',jumlah:'3 cm'},{nama:'Ketumbar',jumlah:'1 sdt'},{nama:'Lada hitam kasar',jumlah:'1 sdt'},{nama:'Gula merah',jumlah:'2 sdm'},{nama:'Asam jawa',jumlah:'1 sdm'},{nama:'Minyak goreng',jumlah:'3 sdm'}],
+langkah:['Marinasi daging dengan kecap hitam, bawang putih, jahe, ketumbar. Diamkan 30 mnt.','Tumis daging hingga berubah warna.','Tuang 300 ml air, masak api sedang.','Tambahkan gula merah dan asam jawa.','Masak api kecil 60 mnt hingga daging empuk dan saus mengental.','Tambahkan lada hitam kasar, koreksi rasa.'],
+tips:'Lada hitam kasar yang ditambahkan di akhir memberikan aroma pedas yang berbeda dari lada yang dimasak lama.'},
+
+{id:70,emoji:'🍲',title:'Shabu-Shabu',origin:'asia',category:'utama',waktu:'20 mnt',porsi:'3 porsi',tingkat:'Mudah',
+bahan:[{nama:'Daging sapi iris tipis',jumlah:'300 g'},{nama:'Tahu',jumlah:'200 g'},{nama:'Kol',jumlah:'200 g'},{nama:'Wortel iris',jumlah:'1 bh'},{nama:'Daun bawang',jumlah:'3 btg'},{nama:'Jamur tiram / shiitake',jumlah:'100 g'},{nama:'Mie ramen / soun',jumlah:'150 g'},{nama:'KUAH: Kaldu ayam',jumlah:'1 liter'},{nama:'Kecap asin',jumlah:'2 sdm'},{nama:'Mirin / gula',jumlah:'1 sdm'},{nama:'SAUS CELUP: Kecap asin + bawang putih + wijen',jumlah:'sck'}],
+langkah:['Siapkan panci berisi kaldu ayam yang sudah dibumbui kecap dan mirin. Didihkan.','Susun semua bahan di piring terpisah.','Celupkan bahan satu per satu ke kaldu mendidih hingga matang.','Tiriskan dan celupkan ke saus.','Terakhir masukkan mie untuk diselesaikan bersama kuah.'],
+tips:'Daging tipis hanya butuh 10–15 detik dalam kaldu mendidih. Jangan terlalu lama agar tidak alot.'},
+
+// TAMBAHAN EROPA
+{id:71,emoji:'🥘',title:'Paella Ayam Spanyol',origin:'eropa',category:'utama',waktu:'60 mnt',porsi:'4 porsi',tingkat:'Menengah',
+bahan:[{nama:'Beras / nasi belum matang',jumlah:'2 cangkir'},{nama:'Ayam potong',jumlah:'4 ptg'},{nama:'Paprika merah & kuning',jumlah:'2 bh'},{nama:'Tomat',jumlah:'2 bh'},{nama:'Bawang putih',jumlah:'4 siung'},{nama:'Bawang bombay',jumlah:'1 bh'},{nama:'Kaldu ayam',jumlah:'600 ml'},{nama:'Kunyit bubuk / saffron',jumlah:'½ sdt'},{nama:'Paprika bubuk',jumlah:'1 sdt'},{nama:'Garam & merica',jumlah:'sck'},{nama:'Minyak zaitun / goreng',jumlah:'3 sdm'}],
+langkah:['Goreng ayam di teflon / wajan besar hingga kecokelatan. Sisihkan.','Tumis bawang bombay dan bawang putih.','Masukkan paprika, tumis 3 mnt.','Masukkan tomat, masak hingga layu.','Masukkan beras, aduk rata dengan sayuran.','Tuang kaldu hangat yang sudah dicampur kunyit.','Taruh ayam di atas, jangan diaduk lagi.','Masak 20–25 mnt hingga nasi matang dan bagian bawah sedikit kerak.'],
+tips:'Kerak di bagian bawah (socarrat) adalah bagian paling nikmat dari paella — jangan diaduk agar terbentuk.'},
+
+{id:72,emoji:'🍳',title:'Quiche Lorraine',origin:'eropa',category:'utama',waktu:'70 mnt',porsi:'6 porsi',tingkat:'Menengah',
+bahan:[{nama:'KULIT: Tepung terigu',jumlah:'200 g'},{nama:'Mentega dingin potong dadu',jumlah:'100 g'},{nama:'Garam',jumlah:'½ sdt'},{nama:'Air es',jumlah:'4–5 sdm'},{nama:'ISIAN: Telur',jumlah:'4 btr'},{nama:'Susu cair / krim',jumlah:'250 ml'},{nama:'Sosis / daging asap iris',jumlah:'150 g'},{nama:'Keju cheddar parut',jumlah:'100 g'},{nama:'Bawang bombay iris',jumlah:'1 bh'},{nama:'Garam, merica, pala',jumlah:'sck'}],
+langkah:['Buat kulit: campurkan tepung dan mentega dingin hingga seperti remah. Tambahkan air es, bentuk adonan.','Dinginkan adonan 30 mnt, giling, taruh di loyang tart, tusuk-tusuk. Panggang 180°C selama 15 mnt.','Tumis bawang bombay dan sosis.','Kocok telur, susu, garam, merica, pala.','Taruh isian di atas kulit, tuang campuran telur, taburi keju.','Panggang 35–40 mnt hingga set dan kecokelatan.'],
+tips:'Quiche yang baik harus ber-wobbly sedikit di tengah saat dikeluarkan dari oven — akan mengeras saat dingin.'},
+
+{id:73,emoji:'🍝',title:'Carbonara Creamy',origin:'eropa',category:'utama',waktu:'25 mnt',porsi:'3 porsi',tingkat:'Mudah',
+bahan:[{nama:'Spaghetti / fettuccine',jumlah:'250 g'},{nama:'Sosis / daging asap iris',jumlah:'150 g'},{nama:'Telur kuning',jumlah:'4 btr'},{nama:'Keju parmesan / cheddar parut',jumlah:'80 g'},{nama:'Bawang putih',jumlah:'3 siung'},{nama:'Merica hitam kasar',jumlah:'1 sdt'},{nama:'Garam',jumlah:'sck'},{nama:'Air rebusan pasta',jumlah:'100 ml'}],
+langkah:['Rebus pasta dengan garam hingga al dente. Simpan 100 ml air rebusannya.','Kocok kuning telur dan keju parut hingga rata.','Goreng sosis/daging asap dengan bawang putih hingga matang.','Matikan api, masukkan pasta ke wajan.','Tuang campuran telur, aduk cepat sambil tambahkan air pasta sedikit-sedikit.','Panas sisa wajan yang matangkan telur tanpa scramble.','Taburi merica hitam kasar.'],
+tips:'Jangan tambahkan susu atau krim — carbonara asli menggunakan telur dan keju saja. Api harus dimatikan agar telur tidak menggumpal.'},
+
+// TAMBAHAN AMERIKA
+{id:74,emoji:'🥞',title:'Pancake Fluffy Amerika',origin:'amerika',category:'utama',waktu:'25 mnt',porsi:'8–10 kue',tingkat:'Mudah',
+bahan:[{nama:'Tepung terigu serbaguna',jumlah:'200 g'},{nama:'Gula',jumlah:'2 sdm'},{nama:'Baking powder',jumlah:'2 sdt'},{nama:'Garam',jumlah:'½ sdt'},{nama:'Telur',jumlah:'2 btr'},{nama:'Susu cair',jumlah:'250 ml'},{nama:'Mentega cair / minyak',jumlah:'2 sdm'},{nama:'Vanilla',jumlah:'1 sdt'},{nama:'Mentega untuk memasak',jumlah:'sck'},{nama:'Madu / sirup / selai',jumlah:'sck'}],
+langkah:['Campur tepung, gula, baking powder, garam.','Kocok telur, susu, mentega cair, vanilla di wadah lain.','Tuang bahan basah ke kering, aduk rata tapi jangan berlebihan (boleh ada sedikit gumpalan).','Panaskan teflon, olesi mentega tipis.','Tuang ¼ cangkir adonan, masak hingga muncul gelembung dan pinggir matang.','Balik, masak 1–2 mnt. Sajikan dengan madu atau sirup.'],
+tips:'Kunci pancake fluffy adalah jangan mengaduk adonan terlalu lama dan banyak. Adonan yang sedikit menggumpal justru menghasilkan pancake yang lebih empuk.'},
+
+{id:75,emoji:'🌭',title:'Hot Dog Homemade',origin:'amerika',category:'utama',waktu:'20 mnt',porsi:'4 porsi',tingkat:'Mudah',
+bahan:[{nama:'Sosis sapi besar',jumlah:'4 bh'},{nama:'Roti hot dog / roti memanjang',jumlah:'4 bh'},{nama:'Bawang bombay karamel',jumlah:'1 bh'},{nama:'Selada',jumlah:'4 lbr'},{nama:'Saus tomat',jumlah:'sck'},{nama:'Mustard kuning',jumlah:'sck'},{nama:'Mayones',jumlah:'sck'},{nama:'BAWANG KARAMEL: Bawang bombay iris',jumlah:'2 bh'},{nama:'Mentega',jumlah:'1 sdm'},{nama:'Gula',jumlah:'1 sdt'}],
+langkah:['Buat bawang karamel: tumis bawang bombay dengan mentega api kecil 20–30 mnt sambil diaduk.','Goreng atau panggang sosis di teflon hingga kulitnya sedikit merekah.','Belah roti memanjang, panggang sebentar.','Taruh selada di roti, letakkan sosis.','Beri saus tomat, mustard, mayones.','Tutup dengan bawang karamel.'],
+tips:'Bawang karamel yang dibuat perlahan adalah pembeda hot dog biasa dengan yang luar biasa — jangan terburu-buru.'},
+
+// CAMILAN TAMBAHAN
+{id:76,emoji:'🧁',title:'Cupcake Cokelat',origin:'eropa',category:'camilan',waktu:'45 mnt',porsi:'12 pcs',tingkat:'Mudah',
+bahan:[{nama:'Tepung terigu',jumlah:'150 g'},{nama:'Bubuk cokelat',jumlah:'30 g'},{nama:'Gula pasir',jumlah:'150 g'},{nama:'Telur',jumlah:'2 btr'},{nama:'Susu cair',jumlah:'120 ml'},{nama:'Minyak goreng',jumlah:'80 ml'},{nama:'Baking powder',jumlah:'1½ sdt'},{nama:'Soda kue',jumlah:'½ sdt'},{nama:'Garam',jumlah:'¼ sdt'},{nama:'Vanilla',jumlah:'1 sdt'},{nama:'FROSTING: Mentega',jumlah:'100 g'},{nama:'Gula halus',jumlah:'200 g'},{nama:'Susu',jumlah:'2 sdm'}],
+langkah:['Ayak tepung, cokelat, baking powder, soda, garam.','Kocok telur, gula, minyak, susu, vanilla hingga rata.','Masukkan bahan kering ke basah, aduk.','Tuang ke loyang cupcake hingga ¾ penuh.','Panggang oven 175°C selama 18–20 mnt.','Buat frosting: kocok mentega, tambah gula halus sedikit-sedikit, tambah susu.','Hias cupcake dengan frosting saat sudah dingin.'],
+tips:'Cupcake harus benar-benar dingin sebelum dihias frosting agar frosting tidak meleleh.'},
+
+{id:77,emoji:'🥐',title:'Croissant Sederhana',origin:'eropa',category:'camilan',waktu:'180 mnt',porsi:'8 pcs',tingkat:'Sulit',
+bahan:[{nama:'Tepung terigu protein tinggi',jumlah:'300 g'},{nama:'Ragi instan',jumlah:'7 g'},{nama:'Gula',jumlah:'2 sdm'},{nama:'Garam',jumlah:'1 sdt'},{nama:'Susu hangat',jumlah:'150 ml'},{nama:'Mentega tawar',jumlah:'200 g'},{nama:'Telur untuk olesan',jumlah:'1 btr'}],
+langkah:['Buat adonan dasar: campurkan semua kecuali 200 g mentega. Uleni 10 mnt. Simpan kulkas 1 jam.','Giling mentega menjadi persegi datar di antara plastik.','Giling adonan jadi persegi, taruh mentega di tengah, lipat. Giling dan lipat 3x sambil mendinginkan di kulkas tiap gilasan.','Giling tipis, potong segitiga, gulung dari alas ke ujung.','Istirahatkan 30 mnt, olesi telur.','Panggang 200°C selama 15–18 mnt.'],
+tips:'Croissant membutuhkan kesabaran — setiap lipatan dan pendinginan menghasilkan lapisan yang banyak dan flaky.'},
+
+{id:78,emoji:'🌽',title:'Jasuke (Jagung Susu Keju)',origin:'indonesia',category:'camilan',waktu:'15 mnt',porsi:'3 porsi',tingkat:'Mudah',
+bahan:[{nama:'Jagung manis',jumlah:'3 tongkol'},{nama:'Mentega',jumlah:'3 sdm'},{nama:'Susu kental manis',jumlah:'4 sdm'},{nama:'Keju cheddar parut',jumlah:'100 g'},{nama:'Garam',jumlah:'sejumput'}],
+langkah:['Rebus atau kukus jagung hingga matang.','Sisir jagung dari tongkolnya.','Panas jagung, tambahkan mentega, aduk hingga meleleh.','Tuang susu kental manis, aduk rata.','Taburi keju parut dan sejumput garam.','Sajikan segera selagi panas.'],
+tips:'Sajikan selagi panas agar keju meleleh sempurna dan aroma mentega masih harum.'},
+
+{id:79,emoji:'🍢',title:'Takoyaki Mini',origin:'asia',category:'camilan',waktu:'30 mnt',porsi:'20 pcs',tingkat:'Menengah',
+bahan:[{nama:'Tepung terigu',jumlah:'200 g'},{nama:'Telur',jumlah:'2 btr'},{nama:'Dashi / kaldu ayam cair',jumlah:'500 ml'},{nama:'Kecap asin',jumlah:'1 sdm'},{nama:'ISIAN: Gurita / bakso ikan potong',jumlah:'150 g'},{nama:'Daun bawang iris',jumlah:'3 btg'},{nama:'Jahe parut (opsional)',jumlah:'1 cm'},{nama:'TOPPING: Mayones, saus takoyaki/saus tonkatsu, aonori / bubuk rumput laut',jumlah:'sck'}],
+langkah:['Campur tepung, telur, dashi/kaldu, kecap asin menjadi adonan cair.','Panaskan cetakan takoyaki, oles minyak.','Tuang adonan hingga penuh.','Taruh 1 bh isian dan daun bawang di tiap lubang.','Tuang adonan lagi, putar isian dengan tusuk sate menjadi bulat.','Masak sambil diputar hingga matang merata.','Taburi mayones, saus, dan aonori.'],
+tips:'Jika tidak punya cetakan takoyaki, bisa menggunakan loyang kue cubit atau muffin kecil sebagai pengganti.'},
+
+{id:80,emoji:'🥧',title:'Puding Cokelat Susu',origin:'eropa',category:'camilan',waktu:'20 mnt',porsi:'6 porsi',tingkat:'Mudah',
+bahan:[{nama:'Agar-agar plain',jumlah:'1 bks'},{nama:'Bubuk cokelat',jumlah:'3 sdm'},{nama:'Gula pasir',jumlah:'150 g'},{nama:'Susu cair',jumlah:'500 ml'},{nama:'Air',jumlah:'300 ml'},{nama:'Garam',jumlah:'¼ sdt'},{nama:'SAUS: Susu kental manis',jumlah:'4 sdm'},{nama:'Cokelat leleh',jumlah:'50 g'}],
+langkah:['Campur agar-agar, bubuk cokelat, gula, garam dalam panci.','Tuang susu dan air, aduk rata.','Masak sambil diaduk hingga mendidih.','Tuang ke cetakan / gelas.','Diamkan suhu ruang, lalu dinginkan di kulkas minimal 2 jam.','Sajikan dengan saus cokelat atau susu kental.'],
+tips:'Puding paling mulus jika diaduk terus selama dimasak untuk mencegah menggumpal di dasar panci.'},
+
+// MINUMAN TAMBAHAN
+{id:81,emoji:'🍵',title:'Matcha Latte',origin:'asia',category:'minuman',waktu:'10 mnt',porsi:'1 gelas',tingkat:'Mudah',
+bahan:[{nama:'Bubuk matcha',jumlah:'2 sdt'},{nama:'Air panas (tidak mendidih, 80°C)',jumlah:'50 ml'},{nama:'Susu cair full cream',jumlah:'200 ml'},{nama:'Gula / madu',jumlah:'2 sdt'},{nama:'Es batu (untuk iced)',jumlah:'sck'}],
+langkah:['Larutkan matcha dengan sedikit air panas, aduk sampai tidak ada gumpalan.','Tambahkan gula, aduk rata.','Untuk iced: isi gelas dengan es batu, tuang susu, tuang matcha.','Untuk hot: panaskan susu, tuang matcha, busa susu di atasnya.'],
+tips:'Matcha tidak boleh diseduh dengan air mendidih 100°C karena akan pahit dan kehilangan aroma harum khasnya.'},
+
+{id:82,emoji:'🥂',title:'Es Buah Segar',origin:'indonesia',category:'minuman',waktu:'20 mnt',porsi:'5 gelas',tingkat:'Mudah',
+bahan:[{nama:'Semangka',jumlah:'200 g'},{nama:'Melon',jumlah:'200 g'},{nama:'Nanas',jumlah:'100 g'},{nama:'Anggur',jumlah:'100 g'},{nama:'Kolang-kaling (tersedia di pasar)',jumlah:'100 g'},{nama:'Agar-agar warna, potong dadu',jumlah:'100 g'},{nama:'Sirup merah / frambozen',jumlah:'3 sdm'},{nama:'Susu kental manis',jumlah:'4 sdm'},{nama:'Es batu serut / batu',jumlah:'sck'},{nama:'Air matang',jumlah:'500 ml'}],
+langkah:['Potong semua buah bentuk dadu.','Masukkan semua buah, kolang-kaling, dan agar-agar ke wadah besar.','Campur air, sirup, dan susu kental manis. Aduk rata.','Tuang kuah ke buah, masukkan es batu.','Aduk perlahan dan sajikan segera.'],
+tips:'Es buah paling nikmat jika buah-buahannya segar dan tidak terlalu matang agar teksturnya tetap firm.'},
+
+{id:83,emoji:'🧊',title:'Es Jeruk Peras',origin:'indonesia',category:'minuman',waktu:'5 mnt',porsi:'2 gelas',tingkat:'Mudah',
+bahan:[{nama:'Jeruk siam / jeruk manis',jumlah:'6 bh'},{nama:'Gula pasir',jumlah:'3 sdm'},{nama:'Air',jumlah:'100 ml'},{nama:'Es batu',jumlah:'sck'},{nama:'Garam',jumlah:'sejumput'}],
+langkah:['Larutkan gula dengan sedikit air panas.','Peras jeruk, saring bijinya.','Isi gelas dengan es batu.','Masukkan sirup gula dan sejumput garam.','Tuang perasan jeruk, aduk rata.','Sajikan dengan irisan jeruk di pinggir gelas.'],
+tips:'Sejumput garam membuat rasa jeruk lebih segar dan manis. Ini adalah cara tradisional yang sudah terbukti.'},
+
+{id:84,emoji:'🫖',title:'Es Teh Lemon Mint',origin:'eropa',category:'minuman',waktu:'15 mnt',porsi:'4 gelas',tingkat:'Mudah',
+bahan:[{nama:'Teh celup',jumlah:'4 kantong'},{nama:'Air mendidih',jumlah:'500 ml'},{nama:'Jeruk nipis / lemon',jumlah:'2 bh'},{nama:'Gula pasir',jumlah:'4 sdm'},{nama:'Daun mint segar',jumlah:'segenggam'},{nama:'Es batu',jumlah:'sck'},{nama:'Air dingin',jumlah:'200 ml'}],
+langkah:['Seduh teh pekat, tambahkan gula, aduk hingga larut.','Dinginkan teh, tambahkan air dingin.','Peras jeruk nipis ke dalam teh.','Masukkan daun mint, tekan-tekan sedikit.','Isi gelas dengan es batu, tuang teh lemon.','Hias dengan irisan lemon dan daun mint.'],
+tips:'Daun mint yang sedikit diremas mengeluarkan minyak esensial yang membuat minuman lebih segar dan harum.'},
+
+{id:85,emoji:'🍫',title:'Coklat Panas Spanyol',origin:'eropa',category:'minuman',waktu:'15 mnt',porsi:'2 gelas',tingkat:'Mudah',
+bahan:[{nama:'Cokelat batang dark',jumlah:'80 g'},{nama:'Susu cair full cream',jumlah:'400 ml'},{nama:'Gula pasir',jumlah:'2 sdm'},{nama:'Kayu manis bubuk',jumlah:'¼ sdt'},{nama:'Vanili',jumlah:'½ sdt'},{nama:'Tepung maizena',jumlah:'1 sdm'},{nama:'Garam',jumlah:'sejumput'}],
+langkah:['Larutkan maizena dalam 50 ml susu dingin.','Panaskan sisa susu dengan gula hingga hampir mendidih.','Masukkan cokelat cincang, aduk hingga meleleh.','Tuang larutan maizena, aduk terus.','Masak hingga mengental seperti hot chocolate yang creamy.','Beri kayu manis, vanili, garam. Sajikan panas.'],
+tips:'Hot chocolate Spanyol jauh lebih kental dari hot choco biasa — konsistensinya mendekati saus cokelat cair.'},
+
+// MORE INDONESIA
+{id:86,emoji:'🍛',title:'Nasi Bakar Ayam',origin:'indonesia',category:'utama',waktu:'45 mnt',porsi:'4 porsi',tingkat:'Menengah',
+bahan:[{nama:'Nasi putih',jumlah:'4 piring'},{nama:'Ayam suwir berbumbu',jumlah:'200 g'},{nama:'Santan',jumlah:'100 ml'},{nama:'Daun pandan',jumlah:'4 lbr'},{nama:'Daun kemangi',jumlah:'sck'},{nama:'Bawang putih',jumlah:'3 siung'},{nama:'Garam',jumlah:'sck'},{nama:'Daun pisang untuk membungkus',jumlah:'sck'}],
+langkah:['Campur nasi dengan santan, bawang putih halus, garam, aduk rata.','Siapkan daun pisang yang sudah dilayukan.','Ambil selembar daun, taruh nasi, beri ayam suwir dan kemangi di tengah.','Tutup dengan nasi lagi, bungkus rapat dan semat.','Bakar di atas bara api atau teflon hingga daun pisang berbau harum dan nasi matang.'],
+tips:'Daun pisang yang hangus sedikit justru menambah aroma khas nasi bakar yang tidak bisa ditiru.'},
+
+{id:87,emoji:'🥣',title:'Bubur Ayam Betawi',origin:'indonesia',category:'utama',waktu:'50 mnt',porsi:'4 porsi',tingkat:'Mudah',
+bahan:[{nama:'Beras',jumlah:'1 cangkir'},{nama:'Kaldu ayam',jumlah:'1,2 liter'},{nama:'Ayam suwir',jumlah:'200 g'},{nama:'Jahe memarkan',jumlah:'2 cm'},{nama:'Garam',jumlah:'sck'},{nama:'PELENGKAP: Cakwe / kerupuk',jumlah:'sck'},{nama:'Kecap manis',jumlah:'sck'},{nama:'Sambal',jumlah:'sck'},{nama:'Bawang goreng',jumlah:'sck'},{nama:'Daun bawang',jumlah:'sck'}],
+langkah:['Masak beras dalam kaldu ayam panas dengan jahe. Aduk sesekali.','Masak hingga beras benar-benar hancur dan menjadi bubur.','Bumbui dengan garam.','Sajikan bubur panas di mangkuk.','Beri topping: ayam suwir, bawang goreng, daun bawang, kerupuk.','Tambahkan kecap manis dan sambal sesuai selera.'],
+tips:'Bubur yang terus diaduk selama dimasak menghasilkan tekstur yang lebih lembut dan homogen.'},
+
+{id:88,emoji:'🍲',title:'Sup Jagung Manis',origin:'indonesia',category:'utama',waktu:'30 mnt',porsi:'4 porsi',tingkat:'Mudah',
+bahan:[{nama:'Jagung manis dipipil',jumlah:'2 bh'},{nama:'Telur',jumlah:'2 btr'},{nama:'Wortel dadu',jumlah:'1 bh'},{nama:'Bawang putih',jumlah:'4 siung'},{nama:'Bawang bombay',jumlah:'½ bh'},{nama:'Kaldu ayam / air',jumlah:'800 ml'},{nama:'Tepung maizena',jumlah:'2 sdm'},{nama:'Garam & merica',jumlah:'sck'},{nama:'Daun bawang',jumlah:'2 btg'},{nama:'Minyak wijen',jumlah:'½ sdt'}],
+langkah:['Blend setengah jagung hingga halus.','Tumis bawang putih dan bawang bombay.','Tuang kaldu, masukkan jagung pipil dan jagung halus.','Masak hingga mendidih, masukkan wortel.','Larutkan maizena dengan air, tuang ke sup sambil diaduk.','Kocok telur, tuang perlahan sambil diaduk agar berserabut.','Bumbui garam, merica, minyak wijen. Taburi daun bawang.'],
+tips:'Menuang telur perlahan sambil diaduk menghasilkan "egg drop" yang cantik seperti di restoran Tionghoa.'},
+
+{id:89,emoji:'🥗',title:'Urap-Urap',origin:'indonesia',category:'utama',waktu:'30 mnt',porsi:'4 porsi',tingkat:'Mudah',
+bahan:[{nama:'Kelapa parut',jumlah:'200 g'},{nama:'Kangkung rebus',jumlah:'150 g'},{nama:'Bayam rebus',jumlah:'100 g'},{nama:'Kacang panjang rebus',jumlah:'100 g'},{nama:'Taoge',jumlah:'100 g'},{nama:'BUMBU URAP: Cabai merah',jumlah:'3 bh'},{nama:'Bawang putih',jumlah:'3 siung'},{nama:'Kencur',jumlah:'1 cm'},{nama:'Daun jeruk',jumlah:'3 lbr'},{nama:'Gula merah',jumlah:'1 sdm'},{nama:'Garam',jumlah:'sck'}],
+langkah:['Haluskan cabai, bawang putih, kencur, gula merah, garam.','Campur bumbu dengan kelapa parut, tambahkan daun jeruk iris halus.','Kukus bumbu kelapa 10 menit.','Setelah sedikit dingin, aduk bumbu kelapa dengan semua sayuran rebus.','Koreksi rasa, sajikan.'],
+tips:'Kukus bumbu kelapa sebentar untuk mengeringkan dan mengeluarkan aroma rempah lebih dalam.'},
+
+{id:90,emoji:'🍜',title:'Mie Ayam Bakso',origin:'indonesia',category:'utama',waktu:'60 mnt',porsi:'4 porsi',tingkat:'Menengah',
+bahan:[{nama:'Mie telur / mie kuning',jumlah:'300 g'},{nama:'Dada ayam rebus suwir',jumlah:'200 g'},{nama:'Bakso sapi',jumlah:'12 bh'},{nama:'Sawi hijau',jumlah:'4 tangkai'},{nama:'KECAP AYAM: Kecap manis',jumlah:'3 sdm'},{nama:'Bawang putih goreng',jumlah:'3 siung'},{nama:'Minyak',jumlah:'2 sdm'},{nama:'KALDU: Tulang ayam',jumlah:'300 g'},{nama:'Bawang putih',jumlah:'5 siung'},{nama:'Garam & merica',jumlah:'sck'},{nama:'Bawang goreng',jumlah:'sck'}],
+langkah:['Buat kaldu: rebus tulang ayam dengan bawang putih 45 mnt. Saring.','Buat kecap ayam: tumis bawang putih dengan minyak, tambahkan kecap manis dan sedikit gula.','Rebus mie sesuai petunjuk, tiriskan.','Aduk mie panas dengan kecap ayam dan minyak bawang.','Rebus sawi dan bakso dalam kaldu.','Sajikan mie di mangkuk, taruh sawi, bakso, ayam suwir, siram kaldu.'],
+tips:'Kecap ayam yang dicampur dengan minyak bawang adalah kunci rasa autentik mie ayam.'},
+
+// MORE CAMILAN
+{id:91,emoji:'🧇',title:'Waffle Tepung Biasa',origin:'eropa',category:'camilan',waktu:'30 mnt',porsi:'4 pcs',tingkat:'Mudah',
+bahan:[{nama:'Tepung terigu',jumlah:'200 g'},{nama:'Gula pasir',jumlah:'3 sdm'},{nama:'Baking powder',jumlah:'2 sdt'},{nama:'Garam',jumlah:'¼ sdt'},{nama:'Telur',jumlah:'2 btr'},{nama:'Susu cair',jumlah:'250 ml'},{nama:'Mentega cair',jumlah:'3 sdm'},{nama:'Vanilla',jumlah:'1 sdt'},{nama:'Madu / selai / es krim',jumlah:'sck'}],
+langkah:['Campur tepung, gula, baking powder, garam.','Kocok telur, susu, mentega, vanilla.','Campur bahan basah ke kering, aduk hingga rata.','Panaskan cetakan waffle, oles mentega.','Tuang adonan, tutup, masak 4–5 mnt.','Sajikan dengan madu, selai, atau es krim.'],
+tips:'Jika tidak punya cetakan waffle, adonan ini bisa dibuat pancake juga dengan hasil yang sama enaknya.'},
+
+{id:92,emoji:'🌰',title:'Kue Cubit',origin:'indonesia',category:'camilan',waktu:'25 mnt',porsi:'30 pcs',tingkat:'Mudah',
+bahan:[{nama:'Tepung terigu',jumlah:'200 g'},{nama:'Telur',jumlah:'2 btr'},{nama:'Gula pasir',jumlah:'100 g'},{nama:'Baking powder',jumlah:'1 sdt'},{nama:'Susu cair',jumlah:'200 ml'},{nama:'Margarin cair',jumlah:'50 ml'},{nama:'Garam',jumlah:'¼ sdt'},{nama:'Meses / keju parut / nutella',jumlah:'sck'}],
+langkah:['Kocok telur dan gula hingga pucat.','Masukkan susu, margarin, aduk rata.','Masukkan tepung, baking powder, garam. Aduk hingga tidak bergerindil.','Panaskan cetakan kue cubit, oles margarin tipis.','Tuang adonan hampir penuh.','Tutup, masak hingga permukaan berlubang-lubang.','Beri topping, tutup sebentar hingga meleleh.'],
+tips:'Kue cubit matang sempurna saat bagian atasnya sudah berlubang-lubang kecil dan tidak bergetar saat diangkat cetakan.'},
+
+{id:93,emoji:'🍠',title:'Kolak Pisang Ubi',origin:'indonesia',category:'camilan',waktu:'35 mnt',porsi:'6 porsi',tingkat:'Mudah',
+bahan:[{nama:'Pisang kepok',jumlah:'4 bh'},{nama:'Ubi jalar merah / kuning',jumlah:'300 g'},{nama:'Santan kental',jumlah:'400 ml'},{nama:'Gula merah',jumlah:'200 g'},{nama:'Daun pandan',jumlah:'2 lbr'},{nama:'Garam',jumlah:'sejumput'},{nama:'Air',jumlah:'500 ml'}],
+langkah:['Kupas ubi, potong dadu 2 cm. Potong pisang serong 2 cm.','Rebus air dengan gula merah dan pandan hingga gula larut.','Masukkan ubi, rebus 15 mnt hingga empuk.','Masukkan pisang, masak 5 mnt.','Tuang santan dan garam, aduk.','Masak lagi 5 mnt sambil diaduk. Sajikan hangat atau dingin.'],
+tips:'Jangan memasak santan terlalu lama setelah dimasukkan agar tidak pecah dan kolak tetap creamy.'},
+
+{id:94,emoji:'🫘',title:'Perkedel Jagung',origin:'indonesia',category:'camilan',waktu:'25 mnt',porsi:'12 pcs',tingkat:'Mudah',
+bahan:[{nama:'Jagung manis dipipil',jumlah:'2 bh'},{nama:'Tepung terigu',jumlah:'5 sdm'},{nama:'Telur',jumlah:'2 btr'},{nama:'Bawang putih halus',jumlah:'3 siung'},{nama:'Daun bawang iris',jumlah:'2 btg'},{nama:'Garam & merica',jumlah:'sck'},{nama:'Gula',jumlah:'½ sdt'},{nama:'Minyak goreng',jumlah:'sck'}],
+langkah:['Blend kasar sebagian jagung, sisakan sebagian utuh.','Campur semua bahan, aduk rata.','Adonan harus cukup kental agar bisa dibentuk.','Ambil 1–2 sdm adonan, taruh di tangan yang sudah dibasahi minyak.','Goreng dalam minyak panas sedang hingga keemasan.','Tiriskan, sajikan dengan saus sambal.'],
+tips:'Memblend sebagian jagung membuat perkedel lebih menyatu, sementara jagung utuh memberikan tekstur.'},
+
+{id:95,emoji:'🥜',title:'Kacang Bawang Goreng',origin:'indonesia',category:'camilan',waktu:'20 mnt',porsi:'5 porsi',tingkat:'Mudah',
+bahan:[{nama:'Kacang tanah kupas',jumlah:'300 g'},{nama:'Bawang putih',jumlah:'5 siung'},{nama:'Daun jeruk',jumlah:'5 lbr'},{nama:'Kencur',jumlah:'1 cm'},{nama:'Garam',jumlah:'1 sdt'},{nama:'Ketumbar bubuk',jumlah:'½ sdt'},{nama:'Minyak goreng',jumlah:'sck'}],
+langkah:['Haluskan bawang putih, kencur, garam, ketumbar.','Campur kacang dengan bumbu halus, aduk rata.','Iris daun jeruk sangat tipis, campurkan.','Goreng kacang dalam minyak tidak terlalu banyak di api sedang.','Aduk terus agar matang merata dan tidak gosong.','Tiriskan, dinginkan hingga crispy.'],
+tips:'Kacang yang baru digoreng terasa lunak tapi akan mengeras dan crispy setelah dingin — jangan overcook.'},
+
+// MORE MINUMAN
+{id:96,emoji:'🍊',title:'Jus Tomat Segar',origin:'eropa',category:'minuman',waktu:'10 mnt',porsi:'2 gelas',tingkat:'Mudah',
+bahan:[{nama:'Tomat merah matang',jumlah:'4 bh'},{nama:'Air jeruk nipis',jumlah:'1 sdm'},{nama:'Gula',jumlah:'1 sdt'},{nama:'Garam',jumlah:'sejumput'},{nama:'Merica hitam',jumlah:'sejumput'},{nama:'Es batu',jumlah:'sck'},{nama:'Daun seledri',jumlah:'sck'}],
+langkah:['Potong tomat, blender halus.','Saring jika tidak suka biji/kulit.','Tambahkan jeruk nipis, gula, garam, merica.','Aduk rata, cicipi.','Tuang ke gelas berisi es batu.','Hias dengan daun seledri.'],
+tips:'Tomat yang benar-benar matang dan sedikit hangat (suhu ruang) menghasilkan jus dengan rasa lebih manis dan segar.'},
+
+{id:97,emoji:'🌿',title:'Es Timun Serut Soda',origin:'indonesia',category:'minuman',waktu:'10 mnt',porsi:'3 gelas',tingkat:'Mudah',
+bahan:[{nama:'Mentimun',jumlah:'2 bh'},{nama:'Air soda',jumlah:'500 ml'},{nama:'Sirup leci / melon',jumlah:'4 sdm'},{nama:'Jeruk nipis',jumlah:'1 bh'},{nama:'Daun mint',jumlah:'sck'},{nama:'Es batu',jumlah:'sck'}],
+langkah:['Kupas mentimun, serut kasar atau potong tipis memanjang.','Peras jeruk nipis.','Isi gelas dengan es batu dan mentimun serut.','Tuang sirup, perasan jeruk, dan daun mint.','Tuang air soda perlahan dari sisi gelas.','Aduk ringan dan sajikan.'],
+tips:'Mentimun memberikan kesegaran alami yang luar biasa pada minuman, terutama di hari panas.'},
+
+{id:98,emoji:'🍵',title:'Kunyit Asam',origin:'indonesia',category:'minuman',waktu:'15 mnt',porsi:'4 gelas',tingkat:'Mudah',
+bahan:[{nama:'Kunyit segar',jumlah:'4 cm'},{nama:'Asam jawa',jumlah:'2 sdm'},{nama:'Gula merah',jumlah:'100 g'},{nama:'Gula pasir',jumlah:'2 sdm'},{nama:'Daun pandan',jumlah:'1 lbr'},{nama:'Garam',jumlah:'sejumput'},{nama:'Air',jumlah:'800 ml'}],
+langkah:['Parut kunyit atau geprek dan iris tipis.','Rebus air dengan kunyit, asam jawa, pandan.','Setelah mendidih 5 mnt, masukkan gula merah dan gula pasir.','Masak hingga gula larut.','Tambahkan garam. Saring.','Sajikan panas atau dingin dengan es batu.'],
+tips:'Kunyit asam adalah minuman jamu tradisional yang kaya antioksidan dan baik untuk pencernaan.'},
+
+{id:99,emoji:'🧉',title:'Es Kelapa Muda Segar',origin:'indonesia',category:'minuman',waktu:'10 mnt',porsi:'2 gelas',tingkat:'Mudah',
+bahan:[{nama:'Kelapa muda (air + daging)',jumlah:'2 bh'},{nama:'Sirup cocopandan / merah',jumlah:'3 sdm'},{nama:'Susu kental manis (opsional)',jumlah:'2 sdm'},{nama:'Es batu',jumlah:'sck'},{nama:'Jeruk nipis',jumlah:'½ bh'}],
+langkah:['Ambil air kelapa, sisihkan.','Keruk daging kelapa muda tipis-tipis.','Isi gelas dengan es batu.','Masukkan daging kelapa.','Tuang air kelapa, sirup, dan perasan jeruk nipis.','Tambahkan susu kental jika suka lebih creamy.'],
+tips:'Es kelapa muda paling nikmat menggunakan kelapa yang benar-benar muda dan daging kelapanya masih jelly.'},
+
+{id:100,emoji:'☕',title:'Es Kopi Susu Vietnam',origin:'asia',category:'minuman',waktu:'10 mnt',porsi:'1 gelas',tingkat:'Mudah',
+bahan:[{nama:'Kopi robusta / kopi hitam pekat',jumlah:'50 ml'},{nama:'Susu kental manis',jumlah:'3 sdm'},{nama:'Es batu',jumlah:'sck'}],
+langkah:['Taruh susu kental manis di dasar gelas kecil.','Teteskan kopi panas perlahan di atas susu.','Aduk rata untuk kopi panas Vietnam style.','Untuk iced: isi gelas besar dengan es batu, tuang campuran kopi-susu.','Aduk rata sebelum diminum.'],
+tips:'Kopi Vietnam aslinya menggunakan filter drip khusus (phin), tapi kopi tubruk yang disaring juga menghasilkan rasa serupa.'}
+];
+
+// ── STATE
+let ori='semua',cat='semua',curRandom=null;
+
+const ORI_LABEL={indonesia:'Indonesia',asia:'Asia',eropa:'Eropa',amerika:'Amerika'};
+const ORI_CLASS={indonesia:'bi',asia:'ba',eropa:'be',amerika:'bam'};
+const CAT_LABEL={utama:'Menu Utama',camilan:'Camilan',minuman:'Minuman'};
+
+function setOri(v,btn){ori=v;document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');render();}
+function setCat(v,btn){cat=v;document.querySelectorAll('.cbtn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');render();}
+
+function getFiltered(){
+  const q=document.getElementById('si').value.toLowerCase();
+  return DATA.filter(d=>{
+    if(ori!=='semua'&&d.origin!==ori)return false;
+    if(cat!=='semua'&&d.category!==cat)return false;
+    if(q&&!d.title.toLowerCase().includes(q)&&!d.bahan.some(b=>b.nama.toLowerCase().includes(q)))return false;
+    return true;
+  });
+}
+
+function render(){
+  const filtered=getFiltered();
+  document.getElementById('countDisplay').textContent=filtered.length+' resep';
+  if(!filtered.length){document.getElementById('grid').innerHTML='<div class="no-res">🔍 Tidak ada resep yang ditemukan</div>';return;}
+
+  const groups={utama:[],camilan:[],minuman:[]};
+  filtered.forEach(d=>groups[d.category].push(d));
+
+  let html='';
+  [['utama','🍽 Menu Utama'],['camilan','🍿 Camilan'],['minuman','🥤 Minuman']].forEach(([k,label])=>{
+    if(!groups[k].length)return;
+    html+=`<div class="sec-title">${label}<span class="ln"></span></div><div class="cards">`;
+    groups[k].forEach(d=>{
+      html+=`<div class="card" onclick="openR(${d.id})">
+        <div class="card-em">${d.emoji}<span class="card-bdr ${ORI_CLASS[d.origin]}">${ORI_LABEL[d.origin]}</span></div>
+        <div class="card-body"><div class="card-title">${d.title}</div>
+        <div class="card-meta"><span>⏱${d.waktu}</span><span class="dot"></span><span>${d.tingkat}</span></div>
+        </div></div>`;
+    });
+    html+='</div>';
+  });
+  document.getElementById('grid').innerHTML=html;
+}
+
+function openR(id){
+  const d=DATA.find(x=>x.id===id);if(!d)return;
+  document.getElementById('mEm').textContent=d.emoji;
+  document.getElementById('mTit').textContent=d.title;
+  document.getElementById('mMeta').innerHTML=`<span>⏱ ${d.waktu}</span><span>👥 ${d.porsi}</span><span>📊 ${d.tingkat}</span>`;
+  document.getElementById('mTags').innerHTML=`<span class="badge ${ORI_CLASS[d.origin]}" style="color:inherit;">${ORI_LABEL[d.origin]}</span><span class="badge" style="background:#f0ece6;color:#6B4C2A;">${CAT_LABEL[d.category]}</span>`;
+  document.getElementById('mIng').innerHTML=d.bahan.map(b=>`<div class="ing"><span class="idot"></span><span>${b.nama}</span><span class="iamt">${b.jumlah}</span></div>`).join('');
+  document.getElementById('mSteps').innerHTML=d.langkah.map((s,i)=>`<div class="step"><div class="snum">${i+1}</div><div class="stext">${s}</div></div>`).join('');
+  if(d.tips){document.getElementById('mTipsWrap').style.display='block';document.getElementById('mTips').textContent=d.tips;}
+  else document.getElementById('mTipsWrap').style.display='none';
+  document.getElementById('recipeModal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeMR(){document.getElementById('recipeModal').classList.remove('open');document.body.style.overflow='';}
+
+function rollRandom(){
+  const pool=getFiltered().length?getFiltered():DATA;
+  curRandom=pool[Math.floor(Math.random()*pool.length)];
+  const d=curRandom;
+  document.getElementById('rResult').innerHTML=`<span class="r-em">${d.emoji}</span><h2>${d.title}</h2><p>${ORI_LABEL[d.origin]} · ${CAT_LABEL[d.category]} · ${d.waktu} · ${d.tingkat}</p>`;
+  document.getElementById('btnVR').onclick=()=>{document.getElementById('randomModal').classList.remove('open');setTimeout(()=>openR(d.id),220);};
+}
+function openRandom(){rollRandom();document.getElementById('randomModal').classList.add('open');}
+
+render();
+</script>
+</body>
+</html>
